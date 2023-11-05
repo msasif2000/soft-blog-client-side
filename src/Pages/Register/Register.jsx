@@ -21,7 +21,7 @@ const Register = () => {
         console.log(displayName, photoURL, email, password);
         if (password.length < 6) {
             toast.error("Password must be at least 6 characters!", {
-                position: toast.POSITION.TOP_CENTER, autoClose: 2000,
+                position: toast.POSITION.TOP_CENTER, autoClose: 1500,
             });
             return;
         }
@@ -30,7 +30,7 @@ const Register = () => {
         const uppercase = /[A-Z]/;
         if (!specialChar.test(password) || !uppercase.test(password)) {
             toast.error("Password must contain at least one special character and one uppercase letter!", {
-                position: toast.POSITION.TOP_CENTER, autoClose: 2500,
+                position: toast.POSITION.TOP_CENTER, autoClose: 1500,
             });
             return;
         }

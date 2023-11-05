@@ -20,7 +20,7 @@ const NewsLetter = () => {
                         <span className="label-text">Enter your email address</span>
                     </label>
                     <div className="relative">
-                        <input type="text" placeholder="Your email" className="input border-2 border-slate-100 w-full" />
+                        <input type="text" placeholder="Your email" className="input border-2 border-slate-100 w-full" required/>
                         <input type="submit" value='subscribe' className="btn bg-orange-600 text-white absolute top-0 right-0 rounded-l-none"/>
                     </div>
                 </fieldset>
