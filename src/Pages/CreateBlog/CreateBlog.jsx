@@ -8,8 +8,9 @@ import { AuthContext } from "../../components/Provider/AuthProvider";
 const CreateBlog = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const {user} = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
     const currentEmail = user.email;
+    const userImg = user?.photoURL ? user.photoURL : "https://i.ibb.co/R3PnR7z/user.png";
 
     const handleNewBlog = (e) => {
         e.preventDefault();
@@ -21,7 +22,7 @@ const CreateBlog = () => {
         const details = form.details.value;
 
         const currentDate = new Date();
-        const newBlog = { title, category, postAdminMail: currentEmail,  image, shortDescription, details, date: currentDate };
+        const newBlog = { title, category, postAdminMail: currentEmail, image, user: userImg, shortDescription, details, date: currentDate };
         console.log(newBlog);
 
         fetch('http://localhost:5000/blogs', {

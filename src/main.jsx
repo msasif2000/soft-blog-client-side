@@ -14,6 +14,8 @@ import AddCategory from './Pages/AddCategory/AddCategory';
 import ErrorPage from './components/ErrorPage/ErrorPage';
 import PrivateRoute from './components/Provider/PrivateRoute';
 import CreateBlog from './Pages/CreateBlog/CreateBlog';
+import AllBlogs from './Pages/AllBlogs/AllBlogs';
+import BlogDetails from './Pages/AllBlogs/BlogDetails';
 
 const router = createBrowserRouter([
   {
@@ -40,7 +42,16 @@ const router = createBrowserRouter([
       {
         path: '/createBlog',
         element: <PrivateRoute><CreateBlog></CreateBlog></PrivateRoute>
-      } 
+      },
+      {
+        path: '/allBlogs', 
+        element: <AllBlogs></AllBlogs>
+      },
+      {
+        path: '/allBlogs/:id',
+        element: <BlogDetails></BlogDetails>, 
+        loader: ({params}) => fetch(`http://localhost:5000/allBlogs/${params.id}`)
+      }
     ]
   },
 ]);

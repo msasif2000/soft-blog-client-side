@@ -16,6 +16,7 @@ const Register = () => {
         e.preventDefault();
         const displayName = e.target.name.value;
         const photoURL = e.target.photoURL.value;
+        console.log(photoURL);
         const email = e.target.email.value;
         const password = e.target.password.value;
         console.log(displayName, photoURL, email, password);
@@ -105,7 +106,7 @@ const Register = () => {
                                 <label className="label">
                                     <span className="label-text font-bold">Photo URL</span>
                                 </label>
-                                <input type="text" name="photoURL" placeholder="photo url" className="input input-bordered text-black" required />
+                                <input type="url" name="photoURL" placeholder="photo url" className="input input-bordered text-black" required />
                             </div>
                             <div className="form-control">
                                 <label className="label">
