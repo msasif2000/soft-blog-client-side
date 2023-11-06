@@ -9,7 +9,7 @@ const CreateBlog = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { user } = useContext(AuthContext);
-    console.log(user);
+    //console.log(user);
     const currentEmail = user.email;
     const userImg = user?.photoURL ? user.photoURL : "https://i.ibb.co/R3PnR7z/user.png";
 
@@ -35,10 +35,12 @@ const CreateBlog = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
-                toast.success("Your Blog is posted!", {
-                    position: toast.POSITION.TOP_CENTER, autoClose: 1500,
-                });
+                //console.log(data);
+                if(data){
+                    toast.success("Your Blog is posted!", {
+                        position: toast.POSITION.TOP_CENTER, autoClose: 1500,
+                    });
+                }
 
 
                 setTimeout(() => {

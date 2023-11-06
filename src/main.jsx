@@ -17,6 +17,7 @@ import CreateBlog from './Pages/CreateBlog/CreateBlog';
 import AllBlogs from './Pages/AllBlogs/AllBlogs';
 import BlogDetails from './Pages/AllBlogs/BlogDetails';
 import WishLists from './Pages/WishLists/WishLists';
+import Profile from './Pages/Profile/Profile';
 
 const router = createBrowserRouter([
   {
@@ -55,8 +56,13 @@ const router = createBrowserRouter([
       },
       {
         path: '/wishLists/:email',
-        element: <WishLists></WishLists>,
+        element: <PrivateRoute><WishLists></WishLists></PrivateRoute>,
         loader: ({ params }) => fetch(`http://localhost:5000/wishLists/${params.email}`)
+      }, 
+      {
+        path: '/profile/:email',
+        element: <PrivateRoute><Profile></Profile></PrivateRoute>,
+        loader: ({params}) => fetch( `http://localhost:5000/profile/${params.email}`)
       }
     ]
   },

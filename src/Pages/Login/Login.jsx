@@ -20,10 +20,12 @@ const Login = () => {
         const password = e.target.password.value;
         userLogin(email, password)
             .then(result => {
-                console.log(result.user)
-                toast.success("Login Successful!", {
-                    position: toast.POSITION.TOP_CENTER, autoClose: 1500,
-                });
+                //console.log(result.user)
+                if(result){
+                    toast.success("Login Successful!", {
+                        position: toast.POSITION.TOP_CENTER, autoClose: 1500,
+                    });
+                }
 
 
                 setTimeout(() => {

@@ -21,15 +21,17 @@ const Header = () => {
                         user ?
 
                             <>
-                                {
-                                    user?.photoURL ?
+                                <Link to={`/profile/${user.email}`}>
+                                    {
+                                        user?.photoURL ?
 
-                                        <div className="dropdown dropdown-end">
-                                            <img src={user.photoURL} alt="" className="h-12 w-12 rounded-full border-sky-300 border-2" />
-                                        </div>
-                                        :
-                                        <img src="https://i.ibb.co/NVLwTNM/manager.jpg" alt=""  className="h-12 w-12 rounded-full border-sky-300 border-2"/>
-                                }
+                                            <div className="dropdown dropdown-end">
+                                                <img src={user.photoURL} alt="" className="h-12 w-12 rounded-full border-sky-300 border-2" />
+                                            </div>
+                                            :
+                                            <img src="https://i.ibb.co/NVLwTNM/manager.jpg" alt="" className="h-12 w-12 rounded-full border-sky-300 border-2" />
+                                    }
+                                </Link>
                                 <button onClick={handleUserLogout} className="btn btn-sm bg-orange-600 text-white">Logout</button>
                             </>
 
