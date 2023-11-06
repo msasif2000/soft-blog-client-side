@@ -6,6 +6,7 @@ import NewsLetter from "../../components/NewsLetter/NewsLetter";
 import Footer from "../../components/Footer/Footer";
 import { AiTwotoneEdit, AiOutlineDelete } from "react-icons/ai";
 import Swal from "sweetalert2";
+import './Profile.css'
 
 const Profile = () => {
     const { user } = useContext(AuthContext);
