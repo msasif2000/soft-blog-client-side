@@ -27,35 +27,36 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <Home></Home>
-      }, 
+      },
       {
         path: '/login',
         element: <Login></Login>
-      }, 
+      },
       {
         path: '/register',
         element: <Register></Register>
-      }, 
+      },
       {
         path: '/addCategory',
         element: <AddCategory></AddCategory>
-      }, 
+      },
       {
         path: '/createBlog',
         element: <PrivateRoute><CreateBlog></CreateBlog></PrivateRoute>
       },
       {
-        path: '/allBlogs', 
+        path: '/allBlogs',
         element: <AllBlogs></AllBlogs>
       },
       {
         path: '/allBlogs/:id',
-        element: <PrivateRoute><BlogDetails></BlogDetails></PrivateRoute>, 
-        loader: ({params}) => fetch(`http://localhost:5000/allBlogs/${params.id}`)
-      }, 
+        element: <PrivateRoute><BlogDetails></BlogDetails></PrivateRoute>,
+        loader: ({ params }) => fetch(`http://localhost:5000/allBlogs/${params.id}`)
+      },
       {
-        path: '/wishLists',
-        element: <WishLists></WishLists>
+        path: '/wishLists/:email',
+        element: <WishLists></WishLists>,
+        loader: ({ params }) => fetch(`http://localhost:5000/wishLists/${params.email}`)
       }
     ]
   },

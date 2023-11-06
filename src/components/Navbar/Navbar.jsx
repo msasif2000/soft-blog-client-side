@@ -5,6 +5,7 @@ import { AuthContext } from "../Provider/AuthProvider";
 
 const Navbar = () => {
     const {user} = useContext(AuthContext);
+    const cEmail = user?.email;
     return (
         <div className="flex flex-col ml-2 mt-10 p-4">
             <ul className="sty  space-y-4">
@@ -17,7 +18,7 @@ const Navbar = () => {
                 }
                 <li><NavLink to='/allBlogs'>All Blogs</NavLink></li>
                 <li><NavLink to='/featuredBlogs'>Featured Blogs</NavLink></li>
-                <li><NavLink to='/wishLists'>Wishlists</NavLink></li>
+                <li><NavLink to={`/wishLists/${cEmail}`}>My Wishlists</NavLink></li>
             </ul>
         </div>
     );

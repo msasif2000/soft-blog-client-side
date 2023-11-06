@@ -7,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const BlogSection = ({ blog }) => {
-    const { _id, title, authorImg, category, postAdminMail, image, shortDescription, date } = blog;
+    const { _id, title, authorImg, category, postAdminMail, image, shortDescription, date, details } = blog;
 
     const { user } = useContext(AuthContext);
     const currentEmail = user?.email;
@@ -16,8 +16,8 @@ const BlogSection = ({ blog }) => {
     const handleWishList = (wishList) => {
         setWishList(wishList);
         if (wishList) {
-            const newWishList = { title, authorImg, category, postAdminMail, image, shortDescription, date, currentEmail: currentEmail };
-            console.log(newWishList);
+            const newWishList = { title, authorImg, blogId: _id,category, postAdminMail, image, shortDescription, date, currentEmail: currentEmail, details };
+        //    console.log(newWishList);
             fetch('http://localhost:5000/addWishList', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
