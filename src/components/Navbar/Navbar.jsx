@@ -18,6 +18,7 @@ const Navbar = () => {
                 }
                 <li><NavLink to='/allBlogs'>All Blogs</NavLink></li>
                 <li><NavLink to='/featuredBlogs'>Featured Blogs</NavLink></li>
+                <li><NavLink to={`/profile/${cEmail}`}>My Blogs</NavLink></li>
                 <li><NavLink to={`/wishLists/${cEmail}`}>My Wishlists</NavLink></li>
             </ul>
         </div>
