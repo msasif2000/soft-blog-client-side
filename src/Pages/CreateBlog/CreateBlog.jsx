@@ -9,6 +9,7 @@ const CreateBlog = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { user } = useContext(AuthContext);
+    console.log(user);
     const currentEmail = user.email;
     const userImg = user?.photoURL ? user.photoURL : "https://i.ibb.co/R3PnR7z/user.png";
 
@@ -22,7 +23,7 @@ const CreateBlog = () => {
         const details = form.details.value;
 
         const currentDate = new Date();
-        const newBlog = { title, category, postAdminMail: currentEmail, image, user: userImg, shortDescription, details, date: currentDate };
+        const newBlog = { title, category, postAdminMail: currentEmail, image, authorImg: userImg, shortDescription, details, date: currentDate };
         console.log(newBlog);
 
         fetch('http://localhost:5000/blogs', {
@@ -47,10 +48,11 @@ const CreateBlog = () => {
 
     }
     return (
-        <div>
-            <Navbar></Navbar>
-
-            <div>
+        <div className="md:flex">
+            <div className="lg:w-1/5 md:w-2/6">
+                <Navbar></Navbar>
+            </div>
+            <div className="lg:w-4/5 md:w-5/6"> 
                 <div className="md-container lg:mx-24 md:mx-6 mx-2">
                     <div className="lg:p-12 md:p-6 p-4 space-y-6">
                         <h2 className="font-rancho text-4xl text-center">Create your Blog here</h2>

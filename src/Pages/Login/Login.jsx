@@ -5,6 +5,7 @@ import { AuthContext } from "../../components/Provider/AuthProvider";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from "../../components/Navbar/Navbar";
+import Footer from "../../components/Footer/Footer";
 
 
 
@@ -69,10 +70,13 @@ const Login = () => {
 
     return (
         <div>
-            <Navbar></Navbar>
-            <div>
-                <div className="hero min-h-screen">
-                    <div className="hero-content flex-col">
+            <div className="md:flex">
+                <div className="lg:w-1/5 md:w-2/6">
+                    <Navbar></Navbar>
+                </div>
+
+                <div className="hero min-h-screen  lg:w-4/5 md:w-5/6">
+                    <div className="hero-content flex-col w-full">
                         <div className="text-center">
                             <h1 className="text-5xl font-bold">Login now!</h1>
                         </div>
@@ -101,17 +105,20 @@ const Login = () => {
                                 <p>continue with</p>
 
                             </div>
-                            <div onClick={handleGoogleLogin} className="flex justify-center mx-auto border-2 rounded-lg border-orange-600">
+                            <div onClick={handleGoogleLogin} className="flex justify-center mx-auto border-2 rounded-lg border-orange-600 my-1">
                                 <p className="flex gap-2 p-2  bg-white"><FcGoogle className="text-2xl "></FcGoogle> Google</p>
                             </div>
-                            <label className="label">
-                                <p>Don`t have an Account? <Link to="/register" className="underline text-orange-600 font-bold">Register</Link></p>
-                            </label>
+                            <div className="flex justify-center">
+                                <label className="label">
+                                    <p>Don`t have an Account? <Link to="/register" className="underline text-orange-600 font-bold">Register</Link></p>
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <ToastContainer />
             </div>
-            <ToastContainer />
+            <Footer></Footer>
         </div>
     );
 };

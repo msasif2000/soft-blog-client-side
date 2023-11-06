@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import Navbar from "../../components/Navbar/Navbar";
 import { AuthContext } from "../../components/Provider/AuthProvider";
+import Footer from "../../components/Footer/Footer";
 
 const Register = () => {
 
@@ -88,79 +89,84 @@ const Register = () => {
 
     return (
         <div>
-            <Navbar></Navbar>
-            <div className="hero min-h-screen">
-                <div className="hero-content flex-col">
-                    <div className="text-center">
-                        <h1 className="text-5xl font-bold">Register Your Account!</h1>
-                    </div>
-                    <div className="card flex-shrink-2 w-full max-w-sm border-2 border-orange-600">
-                        <form onSubmit={handleRegister} className="card-body">
-                            <div className="form-control">
-                                <label className="label">
-                                    <span className="label-text font-bold">Your Name</span>
-                                </label>
-                                <input type="text" name="name" placeholder="name" className="input input-bordered text-black" required />
-                            </div>
-                            <div className="form-control">
-                                <label className="label">
-                                    <span className="label-text font-bold">Photo URL</span>
-                                </label>
-                                <input type="url" name="photoURL" placeholder="photo url" className="input input-bordered text-black" required />
-                            </div>
-                            <div className="form-control">
-                                <label className="label">
-                                    <span className="label-text font-bold">Email</span>
-                                </label>
-                                <input type="email" name="email" placeholder="email" className="input input-bordered text-black" required />
-                            </div>
-                            <div className="form-control">
-                                <label className="label">
-                                    <span className="label-text font-bold">Password</span>
-                                </label>
-                                <input type="password" name="password" placeholder="password" className="input input-bordered text-black" required />
-
-                            </div>
-                            <div className="form-control">
-                                <label className="label cursor-pointer">
-                                    <span className="label-text  text-xl">Accept <Link to="/termsCondition" className="underline">Term & Conditions</Link></span>
-                                    <input type="checkbox" className="checkbox checkbox-primary" required />
-                                </label>
-                            </div>
-                            <div className="form-control mt-6">
-                                <button className="text-white py-2 rounded-xl font-bold bg-orange-600">Register</button>
-                            </div>
-
-
-
-                        </form>
+            <div className="md:flex">
+                <div className="lg:w-1/5 md:w-2/6">
+                    <Navbar></Navbar>
+                </div>
+                <div className="hero min-h-screen mt-4 lg:w-4/5 md:w-5/6">
+                    <div className="hero-content flex-col">
                         <div className="text-center">
-                            <p>--or--</p>
-                            <p>continue with</p>
-                            <div onClick={handleGoogleLogin} className="flex justify-center mx-10 border-2 rounded-lg border-orange-600">
-                                <p className="flex gap-2 p-2  bg-white"><FcGoogle className="text-2xl "></FcGoogle> Google</p>
-                            </div>
+                            <h1 className="text-5xl font-bold">Register Your Account!</h1>
                         </div>
-                        <div className="flex justify-center">
-                            <label className="label ">
-                                <p>Already have an Account? <Link to="/login" className="underline text-orange-600 font-bold">Login</Link></p>
-                            </label>
+                        <div className="card flex-shrink-2 w-full max-w-sm border-2 border-orange-600">
+                            <form onSubmit={handleRegister} className="card-body">
+                                <div className="form-control">
+                                    <label className="label">
+                                        <span className="label-text font-bold">Your Name</span>
+                                    </label>
+                                    <input type="text" name="name" placeholder="name" className="input input-bordered text-black" required />
+                                </div>
+                                <div className="form-control">
+                                    <label className="label">
+                                        <span className="label-text font-bold">Photo URL</span>
+                                    </label>
+                                    <input type="url" name="photoURL" placeholder="photo url" className="input input-bordered text-black" required />
+                                </div>
+                                <div className="form-control">
+                                    <label className="label">
+                                        <span className="label-text font-bold">Email</span>
+                                    </label>
+                                    <input type="email" name="email" placeholder="email" className="input input-bordered text-black" required />
+                                </div>
+                                <div className="form-control">
+                                    <label className="label">
+                                        <span className="label-text font-bold">Password</span>
+                                    </label>
+                                    <input type="password" name="password" placeholder="password" className="input input-bordered text-black" required />
+
+                                </div>
+                                <div className="form-control">
+                                    <label className="label cursor-pointer">
+                                        <span className="label-text  text-xl">Accept <Link to="/termsCondition" className="underline">Term & Conditions</Link></span>
+                                        <input type="checkbox" className="checkbox checkbox-primary" required />
+                                    </label>
+                                </div>
+                                <div className="form-control mt-6">
+                                    <button className="text-white py-2 rounded-xl font-bold bg-orange-600">Register</button>
+                                </div>
+
+
+
+                            </form>
+                            <div className="text-center">
+                                <p>--or--</p>
+                                <p>continue with</p>
+                                <div onClick={handleGoogleLogin} className="flex justify-center my-2 mx-10 border-2 rounded-lg border-orange-600">
+                                    <p className="flex gap-2 p-2  bg-white"><FcGoogle className="text-2xl "></FcGoogle> Google</p>
+                                </div>
+                            </div>
+                            <div className="flex justify-center">
+                                <label className="label ">
+                                    <p>Already have an Account? <Link to="/login" className="underline text-orange-600 font-bold">Login</Link></p>
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <ToastContainer
+                    position="top-center"
+                    autoClose={2000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="colored"
+                />
             </div>
-            <ToastContainer
-                position="top-center"
-                autoClose={2000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="colored"
-            />
+            <Footer></Footer>
         </div>
     );
 };

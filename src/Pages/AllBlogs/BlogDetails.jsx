@@ -4,7 +4,7 @@ import Navbar from "../../components/Navbar/Navbar";
 
 const BlogDetails = () => {
     const blog = useLoaderData();
-    const { title, category, user, postAdminMail, image, shortDescription, date, details } = blog;
+    const { title, category, authorImg, postAdminMail, image, shortDescription, date, details } = blog;
     return (
         <div className="md:container mx-auto">
             <Navbar></Navbar>
@@ -13,7 +13,7 @@ const BlogDetails = () => {
                     <img src={image} alt="" className='md:h-[500px] h-[350px]  w-full rounded-lg' />
                     <div className='md:flex  px-2 items-center justify-between'>
                         <div className='flex items-center gap-2'>
-                            <img src={user} alt="" className="h-12 w-12 rounded-full bg-sky-300 border-2" />
+                            <img src={authorImg} alt="" className="h-12 w-12 rounded-full bg-sky-300 border-2" />
                             <p>Author: <span className='text-blue-600'>{postAdminMail}</span></p>
                         </div>
                         <p className="md:pt-0 pt-2">Date: {date}</p>

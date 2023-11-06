@@ -3,7 +3,7 @@ import { Navigate, useLocation } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { useContext } from "react";
 import { AuthContext } from "./AuthProvider";
-import Skeleton from 'react-loading-skeleton';
+//import Skeleton from 'react-loading-skeleton';
 import './PrivateRoute.css';
 
 const PrivateRoute = ({children}) => {
@@ -12,11 +12,7 @@ const PrivateRoute = ({children}) => {
     //console.log(location);
 
     if (loading) {
-        return (
-          <div className="skeleton-loading">
-            <Skeleton height={200} count={5} />
-          </div>
-        );
+        return  <span className="loading loading-infinity loading-lg flex justify-center mx-auto mt-36"></span>
       }
     
 

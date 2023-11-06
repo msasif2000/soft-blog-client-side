@@ -1,13 +1,24 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import './Navbar.css';
+import { useContext } from "react";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const Navbar = () => {
+    const {user} = useContext(AuthContext);
     return (
-        <div className="flex flex-col ml-2 mt-10">
-            <Link to='/'>Home</Link>
-            <Link to='/createBlog'>Create Blog</Link>
-            <Link to='/allBlogs'>All Blogs</Link>
-            <Link to='/featuredBlogs'>Featured Blogs</Link>
-            <Link to='/wishList'>Wishlist</Link>
+        <div className="flex flex-col ml-2 mt-10 p-4">
+            <ul className="sty  space-y-4">
+                <li><NavLink to='/'>Home</NavLink></li>
+                {
+                    user? 
+                    <li><NavLink to='/createBlog'>Create Blog</NavLink></li>
+                    :
+                    <li><NavLink to='/login'>Create Blog</NavLink></li>
+                }
+                <li><NavLink to='/allBlogs'>All Blogs</NavLink></li>
+                <li><NavLink to='/featuredBlogs'>Featured Blogs</NavLink></li>
+                <li><NavLink to='/wishLists'>Wishlists</NavLink></li>
+            </ul>
         </div>
     );
 };
