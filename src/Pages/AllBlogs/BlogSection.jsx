@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../components/Provider/AuthProvider';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { BsSend } from "react-icons/bs";
 
 const BlogSection = ({ blog }) => {
     const { _id, title, authorImg, category, postAdminMail, image, shortDescription, date, details } = blog;
@@ -105,62 +106,56 @@ const BlogSection = ({ blog }) => {
 
     return (
         <div className="space-y-2 pt-6">
-            <img
-                src={image}
-                alt=""
-                className="lg:h-[500px] h-[350px] w-full rounded-lg"
-            />
+            <img src={image} alt="" className="lg:h-[500px] h-[350px] w-full rounded-lg" />
             <div className="flex  px-2 items-center justify-between">
                 <div className="flex items-center gap-2">
-                    <img
-                        src={authorImg}
-                        alt=""
-                        className="h-12 w-12 rounded-full bg-sky-300 border-2"
-                    />
-                    <p>
-                        Author: <span className="text-blue-600">{postAdminMail}</span>
-                    </p>
+                    <img src={authorImg} alt="" className="h-12 w-12 rounded-full bg-sky-300 border-2" />
+                    <p>Author: <span className="text-blue-600">{postAdminMail}</span></p>
                 </div>
                 <p>Date: {date}</p>
             </div>
             <div className="px-2 space-y-2">
                 <p className="text-2xl font-bold">Topic: {title}</p>
-                <p>
-                    Category: <span className="italic font-semibold">{category}</span>
-                </p>
+                <p>Category: <span className="italic font-semibold">{category}</span></p>
                 <p>###{shortDescription}###</p>
-                <div className="flex justify-between">
-                    {user ? (
-                        isInWishList ? (
-                            <AiFillHeart
-                                className="text-2xl"
-                                onClick={() => handleWishList(false)}
-                            />
-                        ) : (
-                            <AiOutlineHeart
-                                className="text-2xl"
-                                onClick={() => handleWishList(true)}
-                            />
-                        )
-                    ) : (
-                        <Link to="/login">
-                            <AiOutlineHeart className="text-2xl"></AiOutlineHeart>
-                        </Link>
-                    )}
-                    <div className="flex justify-end pr-4">
-                        {user ? (
-                            <Link to={`/allBlogs/${_id}`}>
-                                <button className="btn btn-sm italic text-orange-600">
-                                    See Details...
-                                </button>
-                            </Link>
-                        ) : (
-                            <Link to="/login">
-                                <button className="btn btn-sm italic text-orange-600">
-                                    See Details...
-                                </button>
-                            </Link>
-                        )}
+                <div className="flex justify-between items-center pb-4">
+                    <div className='w-1/4'>
+                        {
+                            user ? (
+                                isInWishList ? (
+                                    <AiFillHeart className="text-3xl" onClick={() => handleWishList(false)} />
+                                ) : (
+                                    <AiOutlineHeart className="text-3xl" onClick={() => handleWishList(true)} />
+                                )
+                            ) : (
+                                <Link to="/login">
+                                    <AiOutlineHeart className="text-3xl"></AiOutlineHeart>
+                                </Link>
+                            )}
+                    </div>
+                    <div className='w-1/2'>
+                        {
+                            user?.email === postAdminMail ?
+                                ''
+                                :
+                                <form>
+                                    <div className="flex items-center">
+                                        <input required type="text" name="title" placeholder="Write a comment..." className="input input-bordered rounded-3xl w-full" />
+                                        <button type="submit" className="bg-orange-600 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded-full ml-2">
+                                            <BsSend className="text-xl" />
+                                        </button>
+                                    </div>
+                                </form>
+
+                        }
+                    </div>
+                    <div className="flex justify-end w-1/4">
+                        {
+                            user ?
+                                <Link to={`/allBlogs/${_id}`}><button className="btn btn-sm italic text-orange-600">See Details...</button> </Link>
+                                :
+                                <Link to="/login"><button className="btn btn-sm italic text-orange-600">See Details...</button> </Link>
+                        }
                     </div>
                 </div>
             </div>

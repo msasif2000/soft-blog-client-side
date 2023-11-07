@@ -7,7 +7,7 @@ const Navbar = () => {
     const { user } = useContext(AuthContext);
     const cEmail = user?.email;
     return (
-        <div className="flex flex-col ml-2 mt-10 p-4">
+        <div className="flex flex-col ml-2 mt-6 p-4">
             <ul className="sty space-y-4">
                 <li><NavLink to='/'>Home</NavLink></li>
                 <li><NavLink to='/allBlogs'>All Blogs</NavLink></li>

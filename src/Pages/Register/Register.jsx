@@ -17,7 +17,7 @@ const Register = () => {
         e.preventDefault();
         const displayName = e.target.name.value;
         const photoURL = e.target.photoURL.value;
-        console.log(photoURL);
+        //console.log(photoURL);
         const email = e.target.email.value;
         const password = e.target.password.value;
         console.log(displayName, photoURL, email, password);
@@ -38,10 +38,12 @@ const Register = () => {
         }
         createUser(email, password)
             .then(result => {
-                console.log(result.user)
-                toast.success("Registration Successful & You're Logged in!", {
-                    position: toast.POSITION.TOP_CENTER, autoClose: 1500,
-                });
+                //console.log(result.user)
+                if (result) {
+                    toast.success("Registration Successful & You're Logged in!", {
+                        position: toast.POSITION.TOP_CENTER, autoClose: 1500,
+                    });
+                }
 
 
                 setTimeout(() => {
