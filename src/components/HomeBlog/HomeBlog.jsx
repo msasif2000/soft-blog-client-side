@@ -36,7 +36,16 @@ const HomeBlog = ({ blog }) => {
             });
             return;
         }
+
         if (addToWishList) {
+            if (postAdminMail === currentEmail) {
+                toast.error('You cannot add your own post to your wish list.', {
+                    position: toast.POSITION.TOP_CENTER,
+                    autoClose: 1500,
+                });
+                return;
+            }
+
             if (isInWishList) {
                 toast.error('Already Added to Wish List', {
                     position: toast.POSITION.TOP_CENTER,
@@ -89,9 +98,9 @@ const HomeBlog = ({ blog }) => {
                     });
             }
         }
-    }
+    };
     return (
-        <div className='space-y-2 pt-6'>
+        <div className='space-y-2  border mx-2 mt-8 rounded-lg'>
             <img src={image} alt="" className='lg:h-[500px] h-[350px] w-full rounded-lg' />
             <div className='flex  px-2 items-center justify-between'>
                 <div className='flex items-center gap-2'>

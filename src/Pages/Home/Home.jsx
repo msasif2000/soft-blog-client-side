@@ -27,6 +27,8 @@ const Home = () => {
                 </div>
                 <div className="w-3/5 flex flex-col  items-center justify-center">
                     <Banner></Banner>
+
+                    <h2 className="text-2xl font-bold text-center mt-12 bg-orange-600 p-2 text-white rounded">Recent Blogs</h2>
                     <div>
                         {
                             blogs.map(blog => <HomeBlog key={blog._id} blog={blog}></HomeBlog>)
