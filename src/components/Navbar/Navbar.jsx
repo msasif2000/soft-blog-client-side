@@ -5,6 +5,7 @@ import { AuthContext } from "../Provider/AuthProvider";
 
 const Navbar = () => {
     const {user} = useContext(AuthContext);
+    //console.log(user);
     const cEmail = user?.email;
     return (
         <div className="flex flex-col ml-2 mt-10 p-4">
