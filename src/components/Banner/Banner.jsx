@@ -5,7 +5,7 @@ import bn5 from '../../assets/images/bn5.jpg'
 const Banner = () => {
     return (
         <div>
-            <div className="h-96 carousel carousel-vertical rounded-box">
+            <div className="md:h-96 h-72 carousel carousel-vertical">
                 <div className="carousel-item h-full">
                     <img src="https://i.ibb.co/W37RFzZ/bn1.webp" className='w-full'/>
                 </div>

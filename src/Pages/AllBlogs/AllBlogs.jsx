@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import BlogSection from "./BlogSection";
-import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
+import Social from "../../components/Social/Social";
 
 const AllBlogs = () => {
     const [blogs, setBlogs] = useState([]);
@@ -28,9 +28,12 @@ const AllBlogs = () => {
             <div className="md:flex">
                 <div className="lg:w-1/5 md:w-2/6">
                     <Navbar></Navbar>
+                    <div className="pl-8 mt-4 md:flex hidden">
+                        <Social></Social>
+                    </div>
                 </div>
-                <div className="p-2 gap-4 lg:w-4/5 md:w-5/6">
-                    <div className="flex justify-between gap-6">
+                <div className="p-2 gap-4 lg:w-4/6 md:w-5/6 mx-auto">
+                    <div className="lg:flex justify-between gap-6">
                         <div className="form-control w-full">
                             <label>
                                 <select name="category" value={category} onChange={(e) => setCategory(e.target.value)} className="input input-bordered w-full">
@@ -46,22 +49,14 @@ const AllBlogs = () => {
                                 </select>
                             </label>
                         </div>
-                        <div className="relative w-full">
-                            <input
-                                type="text"
-                                placeholder="Search Title"
-                                value={searchTitle}
-                                onChange={(e) => setSearchTitle(e.target.value)}
-                                className="input border-2 border-slate-100 w-full"
-                                required
-                            />
+                        <div className="relative w-full lg:mt-0 mt-4">
+                            <input type="text" placeholder="Search Title" value={searchTitle} onChange={(e) => setSearchTitle(e.target.value)} className="input border-2 border-slate-100 w-full" required />
                             <input type="submit" value="Search" className="btn bg-orange-600 text-white absolute top-0 right-0 rounded-l-none" />
                         </div>
                     </div>
                     {filteredBlogs.map(blog => <BlogSection key={blog._id} blog={blog}></BlogSection>)}
                 </div>
             </div>
-            <Footer></Footer>
         </div>
     );
 };

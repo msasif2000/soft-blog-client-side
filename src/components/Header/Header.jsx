@@ -19,9 +19,8 @@ const Header = () => {
                 <div className="flex-none gap-2">
                     {
                         user ?
-
                             <>
-                                <Link to={`/profile/${user.email}`}>
+                                <Link to='/profile'>
                                     {
                                         user?.photoURL ?
 

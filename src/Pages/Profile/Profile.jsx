@@ -1,18 +1,25 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../components/Provider/AuthProvider";
 import Header from "../../components/Header/Header";
-import { Link, useLoaderData, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import NewsLetter from "../../components/NewsLetter/NewsLetter";
-import Footer from "../../components/Footer/Footer";
 import { AiTwotoneEdit, AiOutlineDelete } from "react-icons/ai";
 import Swal from "sweetalert2";
 import './Profile.css'
+import Social from "../../components/Social/Social";
 
 const Profile = () => {
     const { user } = useContext(AuthContext);
 
-    const blogPosts = useLoaderData();
-    //console.log(blogPosts);
+    const [blogPosts, setBlogPosts] = useState([]);
+
+    useEffect(() => {
+        fetch(`http://localhost:5000/profile/${user?.email}`)
+            .then(res => res.json())
+            .then(data => {
+                setBlogPosts(data);
+            })
+    }, [user?.email])
 
     const email = user?.email;
     const name = user?.displayName;
@@ -31,52 +38,56 @@ const Profile = () => {
             confirmButtonText: 'Yes, Delete Post!'
         }).then((result) => {
             if (result.isConfirmed) {
-        fetch(`http://localhost:5000/blogs/${_id}`, {
-            method: 'DELETE'
-        })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-                if (data.deletedCount > 0) {
-                    Swal.fire(
-                        'Deleted!',
-                        'The BlogPost has been deleted.',
-                        'success'
-                    )
+                fetch(`http://localhost:5000/blogs/${_id}`, {
+                    method: 'DELETE'
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        if (data.deletedCount > 0) {
+                            Swal.fire(
+                                'Deleted!',
+                                'The BlogPost has been deleted.',
+                                'success'
+                            )
 
-                     navigate(location.state?.from ? location.state.from : `/profile/${email}`);
-                }
-            })
-      
-    }
-})
+                            navigate(location.state?.from ? location.state.from : `/profile/${email}`);
+                        }
+                    })
+
+            }
+        })
     }
     return (
         <div className="md:container mx-auto mt-2">
             <Header></Header>
-            <h2 className="text-3xl font-bold">DashBoard</h2>
-            <div className="flex gap-2">
-                <div className="pl-4  lg:w-1/5 md:w-2/6">
+
+            <div className="md:flex gap-2">
+                <div className="pl-4  lg:w-2/5 md:w-2/6">
+                    <h2 className="text-3xl font-bold">DashBoard</h2>
                     <ul className="sty">
-                        <div className="border border-orange-600 p-2 my-4">
+                        <div className=" p-2 my-4">
                             <li>Name: {name}</li>
                             <li className="text-blue-600">Email: {email}</li>
                             <li>Total Blog Post: {blogPosts.length}</li>
                         </div>
-                        <li><Link to={`/wishLists/${email}`} className="font-bold">My WishList</Link></li>
+                        <li><Link to='/wishLists' className="font-bold">My WishList</Link></li>
                         <li><Link to='/createBlog' className="font-bold">Create a Blog Post</Link></li>
 
                         <li><Link to='/' ><span className="text-orange-600 font-bold">{'<Back to Home'}</span></Link></li>
                     </ul>
-                    <div className="my-12">
+                    <div className="lg:p-4 lg:mt-2 lg:flex hidden w-full pl-4">
                         <NewsLetter></NewsLetter>
                     </div>
+                    <div className="md:flex mt-4 hidden pl-4">
+                        <Social></Social>
+                    </div>
                 </div>
-                <div className=" lg:w-4/5 md:w-5/6">
+                <div className=" lg:w-4/6 mx-auto md:w-5/6">
                     <h2 className="text-2xl font-bold text-center">My Posts</h2>
                     {
                         blogPosts.map(blog => <div className=" p-2 mb-2" key={blog._id}>
-                            <img src={blog.image} alt="" className='md:h-[500px] h-[350px] w-full rounded-lg' />
+                            <img src={blog.image} alt="" className='lg:h-[450px] md:h-[300px] h-[250px] w-full rounded-lg' />
 
                             <div className='flex  px-2 items-center justify-between'>
                                 <div className='flex items-center gap-2'>
@@ -100,9 +111,15 @@ const Profile = () => {
                             </div>
                         </div>)
                     }
+                    <div className="md:flex lg:hidden justify-center mt-8">
+                        <NewsLetter></NewsLetter>
+                    </div>
+                    <div className="md:hidden flex justify-center">
+                        <Social></Social>
+                    </div>
                 </div>
             </div>
-            <Footer></Footer>
+
         </div>
     );
 };

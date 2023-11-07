@@ -62,14 +62,13 @@ const router = createBrowserRouter([
         loader: ({ params }) => fetch(`http://localhost:5000/allBlogs/${params.id}`)
       },
       {
-        path: '/wishLists/:email',
+        path: '/wishLists',
         element: <PrivateRoute><WishLists></WishLists></PrivateRoute>,
-        loader: ({ params }) => fetch(`http://localhost:5000/wishLists/${params.email}`)
+        
       },
       {
-        path: '/profile/:email',
-        element: <PrivateRoute><Profile></Profile></PrivateRoute>,
-        loader: ({ params }) => fetch(`http://localhost:5000/profile/${params.email}`)
+        path: '/profile',
+        element: <PrivateRoute><Profile></Profile></PrivateRoute>
       },
       {
         path: '/featuredBlogs',

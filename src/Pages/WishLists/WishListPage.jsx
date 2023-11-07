@@ -41,13 +41,15 @@ const WishListPage = ({ blog }) => {
     }
     return (
         <div className='space-y-2 pt-6'>
-            <img src={image} alt="" className='md:h-[500px] h-[350px] w-full rounded-lg' />
-            <div className='flex  px-2 items-center justify-between'>
-                <div className='flex items-center gap-2'>
-                    <img src={authorImg} alt="" className="h-12 w-12 rounded-full bg-sky-300 border-2" />
+            <img src={image} alt="" className='md:h-[450px] h-[300px] w-full rounded-lg' />
+            <div className='flex  px-2 items-center gap-2'>
+                <img src={authorImg} alt="" className="h-12 w-12 rounded-full bg-sky-300 border-2" />
+                <div className='lg:flex items-center gap-2 justify-between w-full'>
+
                     <p>Author: <span className='text-blue-600'>{postAdminMail}</span></p>
+                    <p className=''>Date: {date}</p>
                 </div>
-                <p>Date: {date}</p>
+
             </div>
             <div className='px-2 space-y-2'>
                 <p className='text-2xl font-bold'>Topic: {title}</p>

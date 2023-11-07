@@ -156,20 +156,22 @@ const HomeBlog = ({ blog }) => {
 
     return (
         <div className='space-y-2  border mx-2 mt-8 rounded-lg'>
-            <img src={image} alt="" className='lg:h-[500px] h-[350px] w-full rounded-lg' />
-            <div className='flex  px-2 items-center justify-between'>
-                <div className='flex items-center gap-2'>
-                    <img src={authorImg} alt="" className="h-12 w-12 rounded-full bg-sky-300 border-2" />
+            <img src={image} alt="" className='lg:h-[450px] md:h-[300px] h-[250px] w-full rounded-lg' />
+            <div className='flex  px-2 items-center gap-2'>
+                <img src={authorImg} alt="" className="h-12 w-12 rounded-full bg-sky-300 border-2" />
+                <div className='lg:flex items-center gap-2 justify-between w-full'>
+
                     <p>Author: <span className='text-blue-600'>{postAdminMail}</span></p>
+                    <p className=''>Date: {date}</p>
                 </div>
-                <p>Date: {date}</p>
+
             </div>
             <div className='px-2 space-y-2'>
                 <p className='text-2xl font-bold'>Topic: {title}</p>
                 <p>Category: <span className='italic font-semibold'>{category}</span></p>
                 <p>###{shortDescription}###</p>
-                <div className="flex justify-between items-center pb-4">
-                    <div className=''>
+                <div className="md:flex justify-between items-center pb-4">
+                    <div className='flex justify-between items-center'>
                         {
                             user ? (
                                 isInWishList ? (
@@ -181,16 +183,27 @@ const HomeBlog = ({ blog }) => {
                                 <Link to="/login">
                                     <AiOutlineHeart className="text-3xl"></AiOutlineHeart>
                                 </Link>
-                            )}
-                    </div>
-                    <div className=' flex items-center gap-4'>
-                        {
-                            cmmnt === 0 ?
-                            <p className="w-1/4 flex gap-1"><span>No </span> <span> Comments</span></p>
-                                :
-                                <p className="w-1/4">{cmmnt} Comments</p>
+                            )
                         }
-                        <div className=''>
+                        <div className='md:hidden'>
+                            {
+                                cmmnt === 0 ?
+                                    <p className="w-1/4 flex gap-1"><span>No </span> <span> Comments</span></p>
+                                    :
+                                    <p className="w-1/4 flex gap-1"><span>{cmmnt} </span> <span> Comments</span></p>
+                            }
+                        </div>
+                    </div>
+                    <div className=' flex items-center gap-4 w-full md:mx-4 '>
+                        <div className='md:flex hidden'>
+                            {
+                                cmmnt === 0 ?
+                                    <p className="w-1/4 flex gap-1"><span>No </span> <span> Comments</span></p>
+                                    :
+                                    <p className="w-1/4 flex gap-1"><span>{cmmnt} </span> <span> Comments</span></p>
+                            }
+                        </div>
+                        <div className='w-full'>
                             {
                                 user?.email === postAdminMail ?
                                     ''
@@ -203,11 +216,10 @@ const HomeBlog = ({ blog }) => {
                                             </button>
                                         </div>
                                     </form>
-
                             }
                         </div>
                     </div>
-                    <div className="flex justify-end">
+                    <div className="md:flex justify-end w-44 md:mt-0 mt-2">
                         {
                             user ?
                                 <Link to={`/allBlogs/${_id}`}><button className="btn btn-sm italic text-orange-600">See Details...</button> </Link>
