@@ -23,7 +23,15 @@ const CreateBlog = () => {
         const details = form.details.value;
 
         const currentDate = new Date();
-        const newBlog = { title, category, postAdminMail: currentEmail, image, authorImg: userImg, shortDescription, details, date: currentDate };
+        const formattedDate = currentDate.toLocaleString('en-US', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric',
+        });
+        const newBlog = { title, category, postAdminMail: currentEmail, image, authorImg: userImg, shortDescription, details,currentDate: currentDate, date: formattedDate };
        // console.log(newBlog);
 
         fetch('http://localhost:5000/blogs', {

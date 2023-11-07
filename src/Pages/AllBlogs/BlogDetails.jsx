@@ -1,11 +1,22 @@
 import { useLoaderData } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
+import { useEffect, useState } from "react";
 
 
 const BlogDetails = () => {
     const blog = useLoaderData();
-    const { title, category, authorImg, postAdminMail, image, shortDescription, date, details } = blog;
+    const { _id, title, category, authorImg, postAdminMail, image, shortDescription, date, details } = blog;
+
+    const [comments, setComments] = useState(null);
+    useEffect(() => {
+        fetch(`http://localhost:5000/comments/${_id}`)
+            .then(res => res.json())
+            .then(data => {
+                setComments(data);
+            })
+
+    }, [_id])
     return (
         <div className="md:container mx-auto">
             <div className=" flex">
@@ -28,8 +39,20 @@ const BlogDetails = () => {
                         <div className="border-2 border-orange-600 p-4">
                             <p>{details}</p>
                         </div>
+                        <div>
+                            {
+                                comments?.map(comment => <div className="border-2 border-orange-100 p-4" key={comment._id}>
+                                    <div className="flex items-center gap-2">
+                                        <img src={comment.commentAuthorImg} alt="" className="h-12 w-12 rounded-full bg-sky-300 border-2" />
+                                        <p>{comment.commentAuthorMail}</p>
+                                    </div>
+                                    <p className="pl-12">{comment.comment}</p>
+                                </div>)
+                            }
+                        </div>
                     </div>
                 </div>
+
             </div>
             <Footer></Footer>
         </div>

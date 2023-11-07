@@ -28,7 +28,15 @@ const UpdateBlog = () => {
         const details = form.details.value;
 
         const currentDate = new Date();
-        const updateBlog = { title, category, image, authorImg: userImg, shortDescription, details, date: currentDate };
+        const formattedDate = currentDate.toLocaleString('en-US', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric',
+        });
+        const updateBlog = { title, category, image, authorImg: userImg, shortDescription, details, currentDate:currentDate, date: formattedDate };
         //console.log(newBlog);
 
         fetch(`http://localhost:5000/allBlogs/${_id}`, {
