@@ -17,10 +17,10 @@ const BlogSection = ({ blog }) => {
     useEffect(() => {
         if (user) {
             fetch(`http://localhost:5000/wishLists/${currentEmail}`)
-                .then((res) => res.json())
-                .then((data) => {
+                .then(res => res.json())
+                .then(data => {
                     const existInWishList = data.find(
-                        (exist) =>
+                        exist =>
                             exist.blogId === _id && exist.postAdminMail !== currentEmail
                     );
                     if (existInWishList) {
@@ -62,8 +62,8 @@ const BlogSection = ({ blog }) => {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(newWishList),
                 })
-                    .then((res) => res.json())
-                    .then((data) => {
+                    .then(res => res.json())
+                    .then(data => {
                         if (data) {
                             toast.success('Added to Wish List Successfully', {
                                 position: toast.POSITION.TOP_CENTER,
@@ -84,8 +84,8 @@ const BlogSection = ({ blog }) => {
                 fetch(`http://localhost:5000/wishList/${wishListId}`, {
                     method: 'DELETE',
                 })
-                    .then((res) => res.json())
-                    .then((data) => {
+                    .then(res => res.json())
+                    .then(data => {
                         if (data) {
                             toast.success('Removed from Wish List', {
                                 position: toast.POSITION.TOP_CENTER,

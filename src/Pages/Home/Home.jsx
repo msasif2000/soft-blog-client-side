@@ -34,7 +34,7 @@ const Home = () => {
                             blogs.map(blog => <HomeBlog key={blog._id} blog={blog}></HomeBlog>)
                         }
                     </div>
-                    <div>
+                    <div className="pt-4">
                         <Link to='/allBlogs'><button className="btn btn-sm bg-orange-600 text-white">See More Blog...</button></Link>
                     </div>
                 </div>

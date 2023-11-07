@@ -24,7 +24,7 @@ const CreateBlog = () => {
 
         const currentDate = new Date();
         const newBlog = { title, category, postAdminMail: currentEmail, image, authorImg: userImg, shortDescription, details, date: currentDate };
-        console.log(newBlog);
+       // console.log(newBlog);
 
         fetch('http://localhost:5000/blogs', {
             method: 'POST',

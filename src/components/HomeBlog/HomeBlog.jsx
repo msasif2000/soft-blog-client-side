@@ -19,15 +19,18 @@ const HomeBlog = ({ blog }) => {
             fetch(`http://localhost:5000/wishLists/${currentEmail}`)
                 .then(res => res.json())
                 .then(data => {
-                    const existInWishList = data.find(exist => exist.blogId === _id);
+                    const existInWishList = data.find(
+                        exist =>
+                            exist.blogId === _id && exist.postAdminMail !== currentEmail
+                    );
                     if (existInWishList) {
                         setIsInWishList(true);
                         setWishListID(existInWishList._id);
                     }
-                })
+                });
         }
-    }, [user, currentEmail, _id])
-    //console.log(wishListId);
+    }, [user, currentEmail, _id]);
+
     const handleWishList = (addToWishList) => {
         if (!user) {
             toast.error('Please log in to add to your wish list.', {
@@ -59,8 +62,8 @@ const HomeBlog = ({ blog }) => {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(newWishList),
                 })
-                    .then((res) => res.json())
-                    .then((data) => {
+                    .then(res => res.json())
+                    .then(data => {
                         if (data) {
                             toast.success('Added to Wish List Successfully', {
                                 position: toast.POSITION.TOP_CENTER,
@@ -81,8 +84,8 @@ const HomeBlog = ({ blog }) => {
                 fetch(`http://localhost:5000/wishList/${wishListId}`, {
                     method: 'DELETE',
                 })
-                    .then((res) => res.json())
-                    .then((data) => {
+                    .then(res => res.json())
+                    .then(data => {
                         if (data) {
                             toast.success('Removed from Wish List', {
                                 position: toast.POSITION.TOP_CENTER,

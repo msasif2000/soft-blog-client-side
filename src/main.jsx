@@ -19,6 +19,7 @@ import BlogDetails from './Pages/AllBlogs/BlogDetails';
 import WishLists from './Pages/WishLists/WishLists';
 import Profile from './Pages/Profile/Profile';
 import UpdateBlog from './Pages/UpdateBlog/UpdateBlog';
+import FeaturedBlogs from './components/FeaturedBlogs/FeaturedBlogs';
 
 const router = createBrowserRouter([
   {
@@ -70,6 +71,11 @@ const router = createBrowserRouter([
         element: <PrivateRoute><Profile></Profile></PrivateRoute>,
         loader: ({ params }) => fetch(`http://localhost:5000/profile/${params.email}`)
       },
+      {
+        path: '/featuredBlogs',
+        element: <FeaturedBlogs></FeaturedBlogs>,
+        loader: () => fetch('http://localhost:5000/featuredBlogs')
+      }
 
     ]
   },
