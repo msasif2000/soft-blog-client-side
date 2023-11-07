@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Banner from "../../components/Banner/Banner";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
@@ -30,6 +31,9 @@ const Home = () => {
                         {
                             blogs.map(blog => <HomeBlog key={blog._id} blog={blog}></HomeBlog>)
                         }
+                    </div>
+                    <div>
+                        <Link to='/allBlogs'><button className="btn btn-sm bg-orange-600 text-white">See More Blog...</button></Link>
                     </div>
                 </div>
                 <div className="w-1/5 mr-2">
