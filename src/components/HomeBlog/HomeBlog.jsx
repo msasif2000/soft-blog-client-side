@@ -1,14 +1,14 @@
+
 import { PropTypes } from 'prop-types';
+import { AiOutlineHeart } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
-import { AiOutlineHeart } from "react-icons/ai";
-import { useContext, useState } from 'react';
-import { AuthContext } from '../../components/Provider/AuthProvider';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { AuthContext } from '../Provider/AuthProvider';
+import { useContext, useState } from 'react';
 
-const BlogSection = ({ blog }) => {
+const HomeBlog = ({ blog }) => {
     const { _id, title, authorImg, category, postAdminMail, image, shortDescription, date, details } = blog;
-
+    //console.log(blog);
     const { user } = useContext(AuthContext);
     const currentEmail = user?.email;
     const [wishList, setWishList] = useState(false);
@@ -16,8 +16,8 @@ const BlogSection = ({ blog }) => {
     const handleWishList = (wishList) => {
         setWishList(wishList);
         if (wishList) {
-            const newWishList = { title, authorImg, blogId: _id,category, postAdminMail, image, shortDescription, date, currentEmail: currentEmail, details };
-        //    console.log(newWishList);
+            const newWishList = { title, authorImg, blogId: _id, category, postAdminMail, image, shortDescription, date, currentEmail: currentEmail, details };
+            //    console.log(newWishList);
             fetch('http://localhost:5000/addWishList', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -55,16 +55,16 @@ const BlogSection = ({ blog }) => {
                 <div className='flex justify-between'>
                     {
                         user ?
-                        <AiOutlineHeart className={wishList ? 'selected text-2xl' : 'text-2xl'} onClick={() => handleWishList(true)}></AiOutlineHeart>
-                        :
-                        <Link to='/login'><AiOutlineHeart className="text-2xl" ></AiOutlineHeart></Link>
+                            <AiOutlineHeart className={wishList ? 'selected text-2xl' : 'text-2xl'} onClick={() => handleWishList(true)}></AiOutlineHeart>
+                            :
+                            <Link to='/login'><AiOutlineHeart className="text-2xl" ></AiOutlineHeart></Link>
                     }
                     <div className='flex justify-end pr-4'>
                         {
-                            user ? 
-                            <Link to={`/allBlogs/${_id}`}><button className='btn btn-sm italic text-orange-600'> See Details...</button></Link>
-                            :
-                            <Link to='/login'><button className='btn btn-sm italic text-orange-600'> See Details...</button></Link>
+                            user ?
+                                <Link to={`/allBlogs/${_id}`}><button className='btn btn-sm italic text-orange-600'> See Details...</button></Link>
+                                :
+                                <Link to='/login'><button className='btn btn-sm italic text-orange-600'> See Details...</button></Link>
                         }
                     </div>
                 </div>
@@ -74,8 +74,8 @@ const BlogSection = ({ blog }) => {
     );
 };
 
-BlogSection.propTypes = {
+
+HomeBlog.propTypes = {
     blog: PropTypes.object.isRequired
 }
-
-export default BlogSection;
+export default HomeBlog;

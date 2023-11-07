@@ -21,7 +21,7 @@ const Login = () => {
         userLogin(email, password)
             .then(result => {
                 //console.log(result.user)
-                if(result){
+                if (result) {
                     toast.success("Login Successful!", {
                         position: toast.POSITION.TOP_CENTER, autoClose: 1500,
                     });
@@ -47,10 +47,12 @@ const Login = () => {
     const handleGoogleLogin = () => {
         googleLogin()
             .then(result => {
-                console.log(result.user)
-                toast.success("Login with Google Successful!", {
-                    position: toast.POSITION.TOP_CENTER, autoClose: 1500,
-                });
+                //console.log(result.user)
+                if (result) {
+                    toast.success("Login with Google Successful!", {
+                        position: toast.POSITION.TOP_CENTER, autoClose: 1500,
+                    });
+                }
 
 
                 setTimeout(() => {

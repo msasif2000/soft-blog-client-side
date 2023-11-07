@@ -13,6 +13,7 @@ const AllBlogs = () => {
             .then(data =>
                 setBlogs(data))
     }, [])
+    //console.log(blogs);
     return (
         <div className="md:container mx-auto">
             <div className=" md:flex">

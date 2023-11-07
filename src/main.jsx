@@ -47,6 +47,11 @@ const router = createBrowserRouter([
         element: <PrivateRoute><CreateBlog></CreateBlog></PrivateRoute>
       },
       {
+        path: '/updateBlog/:id',
+        element: <UpdateBlog></UpdateBlog>,
+        loader: ({ params }) => fetch(`http://localhost:5000/allBlogs/${params.id}`)
+      },
+      {
         path: '/allBlogs',
         element: <AllBlogs></AllBlogs>
       },
@@ -64,12 +69,8 @@ const router = createBrowserRouter([
         path: '/profile/:email',
         element: <PrivateRoute><Profile></Profile></PrivateRoute>,
         loader: ({ params }) => fetch(`http://localhost:5000/profile/${params.email}`)
-      }, 
-      {
-        path: '/updateBlog/:id',
-        element: <UpdateBlog></UpdateBlog>,
-        loader: ({params}) => fetch(`http://localhost:5000/allBlogs/${params.id}`)
-      }
+      },
+
     ]
   },
 ]);
