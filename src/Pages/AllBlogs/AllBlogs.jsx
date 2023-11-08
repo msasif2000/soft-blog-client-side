@@ -3,6 +3,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import BlogSection from "./BlogSection";
 import Header from "../../components/Header/Header";
 import Social from "../../components/Social/Social";
+import { AnimatePresence } from "framer-motion";
 
 const AllBlogs = () => {
     const [blogs, setBlogs] = useState([]);
@@ -54,7 +55,11 @@ const AllBlogs = () => {
                             <input type="submit" value="Search" className="btn bg-orange-600 text-white absolute top-0 right-0 rounded-l-none" />
                         </div>
                     </div>
-                    {filteredBlogs.map(blog => <BlogSection key={blog._id} blog={blog}></BlogSection>)}
+                    <AnimatePresence>
+                        {
+                            filteredBlogs.map(blog => <BlogSection key={blog._id} blog={blog}></BlogSection>)
+                        }
+                    </AnimatePresence>
                 </div>
             </div>
         </div>

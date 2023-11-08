@@ -53,7 +53,7 @@ const AuthProvider = ({ children }) => {
             }
         })
         return () => unsubscribed;
-    }, [])
+    }, [user?.email])
 
     const authentications = { user, googleLogin, createUser, userLogin, userLogout, loading }
     return (

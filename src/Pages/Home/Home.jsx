@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import NewsLetter from "../../components/NewsLetter/NewsLetter";
 import { AnimatePresence } from "framer-motion";
 
+
 const Home = () => {
     const [blogs, setBlogs] = useState([]);
     useEffect(() => {
