@@ -1,9 +1,16 @@
-# React + Vite
+# Soft Blog 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Soft Blog is a complete blog site where users can read, write, edit, post, and react to an article. 
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-# b8a11-client-side-msasif2000
+## Features:
+- An unknown user only can read a blog post, see featured posts, can comment on others' post but he can't read comments or post details.
+- Confidentiality of users is maintained
+- Users have their own profile
+- In profile, they can see their posts, and total post number, and can create new posts.
+- Authorized users can edit or delete their own posts, but they can't comment on their posts.
+- Authorized users can see the post details and comments of others but can't edit or delete others' posts.
+- User can submit their email to the newsletter segment to get email regularly.
+- Authentication a maintained through the Firebase authentication system.
+- Every data of a user is saved to our super secret database.
+# Soft Blog Website Link: https://soft-blogs.web.app/
