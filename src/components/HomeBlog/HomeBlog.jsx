@@ -21,12 +21,20 @@ const HomeBlog = ({ blog }) => {
     const currentEmail = user?.email;
     const commentAuthorImg = user?.photoURL ? user.photoURL : "https://i.ibb.co/NVLwTNM/manager.jpg";
 
+    const [blogPosts, setBlogPosts] = useState([]);
+    useEffect(() => {
+        fetch(`https://soft-blog-server.vercel.app/profile/${postAdminMail}`)
+        .then(res => res.json())
+        .then(data => {
+            setBlogPosts(data);
+        })
+    }, [postAdminMail])
     const [isInWishList, setIsInWishList] = useState(false);
     const [wishListId, setWishListID] = useState(null);
 
     const [comments, setComments] = useState(null);
     useEffect(() => {
-        fetch(`http://localhost:5000/comments/${_id}`)
+        fetch(`https://soft-blog-server.vercel.app/comments/${_id}`)
             .then(res => res.json())
             .then(data => {
                 setComments(data);
@@ -37,7 +45,7 @@ const HomeBlog = ({ blog }) => {
     const cmmnt = comments?.length;
     useEffect(() => {
         if (user) {
-            fetch(`http://localhost:5000/wishLists/${currentEmail}`)
+            fetch(`https://soft-blog-server.vercel.app/wishLists/${currentEmail}`)
                 .then(res => res.json())
                 .then(data => {
                     const existInWishList = data.find(
@@ -78,7 +86,7 @@ const HomeBlog = ({ blog }) => {
             } else {
                 const newWishList = { title, authorImg, blogId: _id, category, postAdminMail, image, shortDescription, date, currentEmail: currentEmail, details };
 
-                fetch('http://localhost:5000/addWishList', {
+                fetch('https://soft-blog-server.vercel.app/addWishList', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(newWishList),
@@ -102,7 +110,7 @@ const HomeBlog = ({ blog }) => {
             }
         } else {
             if (isInWishList) {
-                fetch(`http://localhost:5000/wishList/${wishListId}`, {
+                fetch(`https://soft-blog-server.vercel.app/wishList/${wishListId}`, {
                     method: 'DELETE',
                 })
                     .then(res => res.json())
@@ -138,7 +146,7 @@ const HomeBlog = ({ blog }) => {
             second: 'numeric',
         });
         const newComment = { comment, date: formattedDate, blogId: _id, postAdminMail, commentAuthorMail: currentEmail, commentAuthorImg: commentAuthorImg };
-        fetch('http://localhost:5000/addComment', {
+        fetch('https://soft-blog-server.vercel.app/addComment', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newComment),
@@ -171,7 +179,7 @@ const HomeBlog = ({ blog }) => {
             confirmButtonText: 'Yes, Delete Post!'
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:5000/blogs/${_id}`, {
+                fetch(`https://soft-blog-server.vercel.app/blogs/${_id}`, {
                     method: 'DELETE'
                 })
                     .then(res => res.json())
@@ -184,6 +192,8 @@ const HomeBlog = ({ blog }) => {
                                 'success'
                             )
 
+                            const remaining = blogPosts.filter(blog => blog._id !== _id);
+                            setBlogPosts(remaining);
                             navigate(location.state?.from ? location.state.from : '/');
                         }
                     })

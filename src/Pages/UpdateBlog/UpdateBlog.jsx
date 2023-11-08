@@ -39,7 +39,7 @@ const UpdateBlog = () => {
         const updateBlog = { title, category, image, authorImg: userImg, shortDescription, details, currentDate:currentDate, date: formattedDate };
         //console.log(newBlog);
 
-        fetch(`http://localhost:5000/allBlogs/${_id}`, {
+        fetch(`https://soft-blog-server.vercel.app/allBlogs/${_id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

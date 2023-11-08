@@ -1,6 +1,10 @@
 import { PropTypes } from 'prop-types';
+import { useEffect } from 'react';
+import { useContext } from 'react';
+import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2'
+import { AuthContext } from '../../components/Provider/AuthProvider';
 
 const WishListPage = ({ blog }) => {
     // console.log(blog);
@@ -8,6 +12,16 @@ const WishListPage = ({ blog }) => {
 
     const location = useLocation();
     const navigate = useNavigate();
+    const { user } = useContext(AuthContext);
+
+    const [wishList, setBlog] = useState([]);
+    useEffect(() => {
+        fetch(`https://soft-blog-server.vercel.app/wishLists/${user?.email}`)
+            .then(res => res.json())
+            .then(data => {
+                setBlog(data);
+            })
+    }, [user?.email])
     const handleDeleteFromWishList = (_id) => {
         Swal.fire({
             title: 'Are you sure?',
@@ -19,7 +33,7 @@ const WishListPage = ({ blog }) => {
             confirmButtonText: 'Yes, remove it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:5000/wishList/${_id}`, {
+                fetch(`https://soft-blog-server.vercel.app/wishList/${_id}`, {
                     method: 'DELETE'
                 })
                     .then(res => res.json())
@@ -31,13 +45,15 @@ const WishListPage = ({ blog }) => {
                                 'The blog is remove from your WishList.',
                                 'success'
                             )
-
+                           
+                            const remainingWishList = wishList.filter(blog => blog._id !== _id);
+                            setBlog(remainingWishList);
+                            navigate(location.state?.from ? location.state.from : '/profile');
 
                         }
+
+
                     })
-                setTimeout(() => {
-                    navigate(location.state?.from ? location.state.from : '/wishLists');
-                }, 1000);
             }
         })
     }

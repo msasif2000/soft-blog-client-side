@@ -34,7 +34,7 @@ const CreateBlog = () => {
         const newBlog = { title, category, postAdminMail: currentEmail, image, authorImg: userImg, shortDescription, details, currentDate: currentDate, date: formattedDate };
         // console.log(newBlog);
 
-        fetch('http://localhost:5000/blogs', {
+        fetch('https://soft-blog-server.vercel.app/blogs', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

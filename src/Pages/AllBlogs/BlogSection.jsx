@@ -1,5 +1,5 @@
 import { PropTypes } from 'prop-types';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link,  useNavigate } from 'react-router-dom';
 import { AiFillHeart, AiOutlineDelete, AiOutlineHeart, AiTwotoneEdit } from 'react-icons/ai';
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../components/Provider/AuthProvider';
@@ -13,7 +13,7 @@ import { useInView } from 'react-intersection-observer';
 const BlogSection = ({ blog }) => {
     const { _id, title, authorImg, category, postAdminMail, image, shortDescription, date, details } = blog;
 
-    const location = useLocation();
+    //const location = useLocation();
     const navigate = useNavigate();
     const { user } = useContext(AuthContext);
     const currentEmail = user?.email;
@@ -21,9 +21,17 @@ const BlogSection = ({ blog }) => {
     const [isInWishList, setIsInWishList] = useState(false);
     const [wishListId, setWishListID] = useState(null);
 
+    const [blogPosts, setBlogPosts] = useState([]);
+    useEffect(() => {
+        fetch(`https://soft-blog-server.vercel.app/profile/${postAdminMail}`)
+        .then(res => res.json())
+        .then(data => {
+            setBlogPosts(data);
+        })
+    }, [postAdminMail])
     const [comments, setComments] = useState(null);
     useEffect(() => {
-        fetch(`http://localhost:5000/comments/${_id}`)
+        fetch(`https://soft-blog-server.vercel.app/comments/${_id}`)
             .then(res => res.json())
             .then(data => {
                 setComments(data);
@@ -35,7 +43,7 @@ const BlogSection = ({ blog }) => {
 
     useEffect(() => {
         if (user) {
-            fetch(`http://localhost:5000/wishLists/${currentEmail}`)
+            fetch(`https://soft-blog-server.vercel.app/wishLists/${currentEmail}`)
                 .then(res => res.json())
                 .then(data => {
                     const existInWishList = data.find(
@@ -76,7 +84,7 @@ const BlogSection = ({ blog }) => {
             } else {
                 const newWishList = { title, authorImg, blogId: _id, category, postAdminMail, image, shortDescription, date, currentEmail: currentEmail, details };
 
-                fetch('http://localhost:5000/addWishList', {
+                fetch('https://soft-blog-server.vercel.app/addWishList', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(newWishList),
@@ -100,7 +108,7 @@ const BlogSection = ({ blog }) => {
             }
         } else {
             if (isInWishList) {
-                fetch(`http://localhost:5000/wishList/${wishListId}`, {
+                fetch(`https://soft-blog-server.vercel.app/wishList/${wishListId}`, {
                     method: 'DELETE',
                 })
                     .then(res => res.json())
@@ -137,7 +145,7 @@ const BlogSection = ({ blog }) => {
             second: 'numeric',
         });
         const newComment = { comment, date: formattedDate, blogId: _id, postAdminMail, commentAuthorMail: currentEmail, commentAuthorImg: commentAuthorImg };
-        fetch('http://localhost:5000/addComment', {
+        fetch('https://soft-blog-server.vercel.app/addComment', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newComment),
@@ -169,9 +177,10 @@ const BlogSection = ({ blog }) => {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, Delete Post!'
-        }).then((result) => {
+        })
+        .then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:5000/blogs/${_id}`, {
+                fetch(`https://soft-blog-server.vercel.app/blogs/${_id}`, {
                     method: 'DELETE'
                 })
                     .then(res => res.json())
@@ -184,7 +193,9 @@ const BlogSection = ({ blog }) => {
                                 'success'
                             )
 
-                            navigate(location.state?.from ? location.state.from : '/allBlogs');
+                            const remaining = blogPosts.filter(blog => blog._id !== _id);
+                            setBlogPosts(remaining);
+                            navigate('/');
                         }
                     })
 
@@ -196,7 +207,7 @@ const BlogSection = ({ blog }) => {
     });
 
     return (
-        <motion.div className="space-y-2 pt-6 border-b-black border-b-2" ref={ref}
+        <motion.div className="space-y-2 pt-6 border-b-black border-b-2 " ref={ref}
         initial={{ opacity: 0 }}
         animate={inView ? { opacity: 1 } : {}}
         exit={{ opacity: 0 }}

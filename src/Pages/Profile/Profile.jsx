@@ -13,7 +13,7 @@ const Profile = () => {
     const [blogPosts, setBlogPosts] = useState([]);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/profile/${user?.email}`)
+        fetch(`https://soft-blog-server.vercel.app/profile/${user?.email}`)
             .then(res => res.json())
             .then(data => {
                 setBlogPosts(data);
@@ -37,7 +37,7 @@ const Profile = () => {
             confirmButtonText: 'Yes, Delete Post!'
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:5000/blogs/${_id}`, {
+                fetch(`https://soft-blog-server.vercel.app/blogs/${_id}`, {
                     method: 'DELETE'
                 })
                     .then(res => res.json())

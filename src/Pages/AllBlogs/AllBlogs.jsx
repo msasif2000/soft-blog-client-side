@@ -11,7 +11,7 @@ const AllBlogs = () => {
     const [searchTitle, setSearchTitle] = useState("");
 
     useEffect(() => {
-        fetch('http://localhost:5000/allBlogs')
+        fetch('https://soft-blog-server.vercel.app/allBlogs')
             .then(res => res.json())
             .then(data => setBlogs(data))
     }, []);
@@ -55,11 +55,13 @@ const AllBlogs = () => {
                             <input type="submit" value="Search" className="btn bg-orange-600 text-white absolute top-0 right-0 rounded-l-none" />
                         </div>
                     </div>
-                    <AnimatePresence>
-                        {
-                            filteredBlogs.map(blog => <BlogSection key={blog._id} blog={blog}></BlogSection>)
-                        }
-                    </AnimatePresence>
+                  
+                        <AnimatePresence>
+                            {
+                                filteredBlogs.map(blog => <BlogSection key={blog._id} blog={blog}></BlogSection>)
+                            }
+                        </AnimatePresence>
+                   
                 </div>
             </div>
         </div>

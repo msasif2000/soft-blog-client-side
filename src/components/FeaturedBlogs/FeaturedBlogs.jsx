@@ -37,7 +37,7 @@ const FeaturedBlogs = () => {
             Header: 'Profile',
             accessor: 'authorImg',
             Cell: ({ cell: { value } }) => (
-                <img src={value} alt="Author" style={{ width: '50px', height: '50px', borderRadius: '50%', }} />
+                <img src={value} alt="Author" style={{ width: '40px', height: '40px', borderRadius: '50%', }} />
             ),
             className: 'md:w-1/8 lg:w-1/12',
         }
@@ -73,7 +73,7 @@ const FeaturedBlogs = () => {
                                 return (
                                     <tr {...row.getRowProps()}  className="hover:bg-gray-100">
                                         {row.cells.map(cell => (
-                                             <td {...cell.getCellProps()} className=" lg:pl-16">{cell.render('Cell')}</td>
+                                             <td {...cell.getCellProps()} className=" lg:pl-16 py-2">{cell.render('Cell')}</td>
                                         ))}
                                     </tr>
                                 )

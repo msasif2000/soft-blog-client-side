@@ -11,7 +11,7 @@ const AddCategory = () => {
         const newCat = { catName};
         console.log(newCat);
 
-        fetch('http://localhost:5000/addCategory', {
+        fetch('https://soft-blog-server.vercel.app/addCategory', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

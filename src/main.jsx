@@ -51,7 +51,7 @@ const router = createBrowserRouter([
       {
         path: '/updateBlog/:id',
         element: <UpdateBlog></UpdateBlog>,
-        loader: ({ params }) => fetch(`http://localhost:5000/allBlogs/${params.id}`)
+        loader: ({ params }) => fetch(`https://soft-blog-server.vercel.app/allBlogs/${params.id}`)
       },
       {
         path: '/allBlogs',
@@ -60,7 +60,7 @@ const router = createBrowserRouter([
       {
         path: '/allBlogs/:id',
         element: <PrivateRoute><BlogDetails></BlogDetails></PrivateRoute>,
-        loader: ({ params }) => fetch(`http://localhost:5000/allBlogs/${params.id}`)
+        loader: ({ params }) => fetch(`https://soft-blog-server.vercel.app/allBlogs/${params.id}`)
       },
       {
         path: '/wishLists',
@@ -74,7 +74,7 @@ const router = createBrowserRouter([
       {
         path: '/featuredBlogs',
         element: <FeaturedBlogs></FeaturedBlogs>,
-        loader: () => fetch('http://localhost:5000/featuredBlogs')
+        loader: () => fetch('https://soft-blog-server.vercel.app/featuredBlogs')
       }
 
     ]
