@@ -20,6 +20,7 @@ import WishLists from './Pages/WishLists/WishLists';
 import Profile from './Pages/Profile/Profile';
 import UpdateBlog from './Pages/UpdateBlog/UpdateBlog';
 import FeaturedBlogs from './components/FeaturedBlogs/FeaturedBlogs';
+import { SkeletonTheme } from 'react-loading-skeleton';
 
 const router = createBrowserRouter([
   {
@@ -82,8 +83,10 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
+    <SkeletonTheme baseColor="#202020" highlightColor="#444">
     <AuthProvider>
       <RouterProvider router={router} />
     </AuthProvider>
+    </SkeletonTheme>
   </React.StrictMode>,
 )

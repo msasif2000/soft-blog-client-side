@@ -19,7 +19,7 @@ const Header = () => {
                 <div className="flex-none gap-4">
                     {
                         user ?
-                            <div className="flex items-center ">
+                            <div className="flex items-center gap-4">
                                 <Link to='/profile'>
                                     {
                                         user?.photoURL ?

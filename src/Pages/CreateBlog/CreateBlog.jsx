@@ -31,8 +31,8 @@ const CreateBlog = () => {
             minute: 'numeric',
             second: 'numeric',
         });
-        const newBlog = { title, category, postAdminMail: currentEmail, image, authorImg: userImg, shortDescription, details,currentDate: currentDate, date: formattedDate };
-       // console.log(newBlog);
+        const newBlog = { title, category, postAdminMail: currentEmail, image, authorImg: userImg, shortDescription, details, currentDate: currentDate, date: formattedDate };
+        // console.log(newBlog);
 
         fetch('http://localhost:5000/blogs', {
             method: 'POST',
@@ -44,7 +44,7 @@ const CreateBlog = () => {
             .then(res => res.json())
             .then(data => {
                 //console.log(data);
-                if(data){
+                if (data) {
                     toast.success("Your Blog is posted!", {
                         position: toast.POSITION.TOP_CENTER, autoClose: 1500,
                     });
@@ -62,7 +62,7 @@ const CreateBlog = () => {
             <div className="lg:w-1/5 md:w-2/6">
                 <Navbar></Navbar>
             </div>
-            <div className="lg:w-4/5 md:w-5/6"> 
+            <div className="lg:w-4/5 md:w-5/6">
                 <div className="md-container lg:mx-24 md:mx-6 mx-2">
                     <div className="lg:p-12 md:p-6 p-4 space-y-6">
                         <h2 className="font-rancho text-4xl text-center">Create your Blog here</h2>

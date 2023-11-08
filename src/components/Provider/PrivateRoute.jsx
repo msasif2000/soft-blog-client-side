@@ -5,6 +5,7 @@ import { useContext } from "react";
 import { AuthContext } from "./AuthProvider";
 //import Skeleton from 'react-loading-skeleton';
 import './PrivateRoute.css';
+import Skeleton from "react-loading-skeleton";
 
 const PrivateRoute = ({children}) => {
     const {user, loading} = useContext(AuthContext);
@@ -12,7 +13,8 @@ const PrivateRoute = ({children}) => {
     //console.log(location);
 
     if (loading) {
-        return  <span className="loading loading-infinity loading-lg flex justify-center mx-auto mt-36"></span>
+        // return  <span className="loading loading-infinity loading-lg flex justify-center mx-auto mt-36"></span>
+        return <p className="mt-12 w-[300px] mx-auto"><Skeleton count={5} height={40} highlightColor="red"  className="skeleton-loading" /></p>
       }
     
 
