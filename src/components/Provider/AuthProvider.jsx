@@ -2,7 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import  PropTypes  from 'prop-types'
 import { GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import auth from "../../firebase/firebase_config";
-import axios from "axios";
+//import axios from "axios";
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -35,25 +35,35 @@ const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const unsubscribed = onAuthStateChanged(auth, (currentUser) => {
-            const userEmail = currentUser?.email || user?.email;
-            const loggedUser = { email: userEmail };
-            setUser(currentUser);
-            setLoading(false);
             if (currentUser) {
-                axios.post('https://soft-blog-server.vercel.app/jwt', loggedUser, {withCredentials: true})
-                .then(res => {
-                    console.log('token response', res.data);
-                })
+                setUser(currentUser);
+                setLoading(false);
             }
             else {
-                axios.post('https://soft-blog-server.vercel.app/logout', loggedUser, {withCredentials: true})
-               .then(res => {
-                console.log(res.data);
-               })
+                setUser(null);
             }
         })
         return () => unsubscribed;
-    }, [user?.email])
+        // const unsubscribed = onAuthStateChanged(auth, (currentUser) => {
+        //     const userEmail = currentUser?.email || user?.email;
+        //     const loggedUser = { email: userEmail };
+        //     setUser(currentUser);
+        //     setLoading(false);
+        //     if (currentUser) {
+        //         axios.post('https://soft-blog-server.vercel.app/jwt', loggedUser, {withCredentials: true})
+        //         .then(res => {
+        //             console.log('token response', res.data);
+        //         })
+        //     }
+        //     else {
+        //         axios.post('https://soft-blog-server.vercel.app/logout', loggedUser, {withCredentials: true})
+        //        .then(res => {
+        //         console.log(res.data);
+        //        })
+        //     }
+        // })
+        // return () => unsubscribed;
+    }, [])
 
     const authentications = { user, googleLogin, createUser, userLogin, userLogout, loading }
     return (
