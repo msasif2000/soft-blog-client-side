@@ -5,7 +5,6 @@ import { AuthContext } from "../../components/Provider/AuthProvider";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from "../../components/Navbar/Navbar";
-import Footer from "../../components/Footer/Footer";
 
 
 
@@ -122,7 +121,6 @@ const Login = () => {
                 </div>
                 <ToastContainer />
             </div>
-            <Footer></Footer>
         </div>
     );
 };

@@ -73,7 +73,7 @@ const CreateBlog = () => {
                                     <label className="label">
                                         <span className="label-text font-bold">Title</span>
                                     </label>
-                                    <label className="input-group">
+                                    <label className="">
                                         <input required type="text" name="title" placeholder="Enter Blog Title" className="input input-bordered w-full" />
                                     </label>
                                 </div>
@@ -81,7 +81,7 @@ const CreateBlog = () => {
                                     <label className="label">
                                         <span className="label-text font-bold">Select Category</span>
                                     </label>
-                                    <label className="input-group">
+                                    <label className="">
                                         <select name="category" className="input input-bordered w-full">
                                             <option value="Travel and Adventure">Travel and Adventure</option>
                                             <option value="Technology and Programming">Technology and Programming</option>
@@ -98,7 +98,7 @@ const CreateBlog = () => {
                                     <label className="label">
                                         <span className="label-text font-bold">Image Link</span>
                                     </label>
-                                    <label className="input-group">
+                                    <label className="">
                                         <input required type="text" name="image" placeholder="Enter Image Link" className="input input-bordered w-full" />
                                     </label>
                                 </div>
@@ -106,15 +106,15 @@ const CreateBlog = () => {
                                     <label className="label">
                                         <span className="label-text font-bold">Short Description</span>
                                     </label>
-                                    <label className="input-group">
+                                    <label className="">
                                         <input required type="text" name="shortDescription" placeholder="Enter a Short Description" className="input input-bordered w-full" />
                                     </label>
                                 </div>
                                 <div className="form-control">
                                     <label className="label">
-                                        <span className="label-text font-bold">Enter Details</span>
+                                        <span className="label-text font-bold">Write Details</span>
                                     </label>
-                                    <label className="input-group">
+                                    <label className="">
                                         <input required type="text" name="details" placeholder="Write Your Blog Here..." className="input input-bordered w-full h-28" />
                                     </label>
                                 </div>

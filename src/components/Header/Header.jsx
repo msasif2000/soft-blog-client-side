@@ -16,23 +16,23 @@ const Header = () => {
                     <img src={logo} alt="" className="h-12 w-12 rounded-lg" />
                     <Link to='/' className="ml-2 font-bold normal-case text-2xl text-orange-600">Soft <span className="text-orange-800">Blog</span></Link>
                 </div>
-                <div className="flex-none gap-2">
+                <div className="flex-none gap-4">
                     {
                         user ?
-                            <>
+                            <div className="flex items-center ">
                                 <Link to='/profile'>
                                     {
                                         user?.photoURL ?
 
                                             <div className="dropdown dropdown-end">
-                                                <img src={user.photoURL} alt="" className="h-12 w-12 rounded-full border-sky-300 border-2" />
+                                                <img src={user.photoURL} alt="" className="h-10 w-10 rounded-full border-sky-300 border-2" />
                                             </div>
                                             :
                                             <img src="https://i.ibb.co/NVLwTNM/manager.jpg" alt="" className="h-12 w-12 rounded-full border-sky-300 border-2" />
                                     }
                                 </Link>
                                 <button onClick={handleUserLogout} className="btn btn-sm bg-orange-600 text-white">Logout</button>
-                            </>
+                            </div>
 
                             :
                             <>

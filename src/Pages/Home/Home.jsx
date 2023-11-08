@@ -23,22 +23,21 @@ const Home = () => {
                 <div className="lg:w-2/6 md:w-2/5">
                     <div className="flex md:flex-col flex-row-reverse">
                         <div>
-                            <h2 className="text-2xl ml-2 md:p-4"><span className="text-orange-800 font-bold px-1 border-b-0 shadow-2xl">Explore Yourself</span>, <br /> <span className=" text-orange-600 font-bold shadow-2xl  px-1">Share with others</span></h2>
+                            <h2 className="text-2xl lg:ml-2 md:px-4"><span className="text-orange-800 font-bold px-1 shadow-2xl shadow-orange-400">Explore Yourself</span>, <br /> <span className=" text-orange-600 font-bold shadow-2xl  shadow-orange-600  px-1 py-1">Share with others</span></h2>
                         </div>
                         <Navbar></Navbar>
                     </div>
-                    <div className=" mt-48">
-                        <div className="lg:p-2 lg:mt-2 lg:flex hidden">
-                            <NewsLetter></NewsLetter>
-                        </div>
+                    <div className=" md:mt-48">
                         <div className="p-2 lg:mt-2 md:flex hidden">
                             <Social></Social>
                         </div>
-
+                        <div className="lg:p-2 lg:mt-2 lg:flex hidden">
+                            <NewsLetter></NewsLetter>
+                        </div>
                     </div>
                 </div>
-                <div className="flex flex-col  items-center justify-center px-2">
-                    <div>
+                <div className="flex flex-col  items-center justify-center md:px-2 gap-4 lg:w-4/6 md:w-5/6 mx-auto">
+                    <div className="w-full mt-4">
                         <Banner></Banner>
                     </div>
 
@@ -51,9 +50,13 @@ const Home = () => {
                     <div className="pt-4">
                         <Link to='/allBlogs'><button className="btn btn-sm bg-orange-600 text-white">See More Blog...</button></Link>
                     </div>
+                    <div className="md:hidden mt-8 flex  w-full">
+                        <Social></Social>
+                    </div>
                     <div className="lg:hidden mt-8 flex  w-full">
-                            <NewsLetter></NewsLetter>
-                        </div>
+                        <NewsLetter></NewsLetter>
+                    </div>
+
                 </div>
 
 

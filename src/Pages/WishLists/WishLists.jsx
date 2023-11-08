@@ -1,9 +1,9 @@
 
-
-import Navbar from "../../components/Navbar/Navbar";
 import WishListPage from "./WishListPage";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../components/Provider/AuthProvider";
+import Navbar from "../../components/Navbar/Navbar";
+import Header from "../../components/Header/Header";
 
 
 const WishLists = () => {
@@ -21,6 +21,7 @@ const WishLists = () => {
 
     return (
         <div className="md:container mx-auto">
+            <Header></Header>
             <div className=" md:flex">
                 <div className="lg:w-1/5 md:w-2/6">
                     <Navbar></Navbar>

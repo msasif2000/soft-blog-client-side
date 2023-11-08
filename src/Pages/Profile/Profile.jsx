@@ -5,7 +5,6 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import NewsLetter from "../../components/NewsLetter/NewsLetter";
 import { AiTwotoneEdit, AiOutlineDelete } from "react-icons/ai";
 import Swal from "sweetalert2";
-import './Profile.css'
 import Social from "../../components/Social/Social";
 
 const Profile = () => {
@@ -63,25 +62,28 @@ const Profile = () => {
             <Header></Header>
 
             <div className="md:flex gap-2">
-                <div className="pl-4  lg:w-2/5 md:w-2/6">
+                <div className=" lg:w-2/5 md:w-2/6">
                     <h2 className="text-3xl font-bold">DashBoard</h2>
-                    <ul className="sty">
-                        <div className=" p-2 my-4">
+                    <div className="">
+                        <ul className="py-2 my-4 sty">
                             <li>Name: {name}</li>
                             <li className="text-blue-600">Email: {email}</li>
                             <li>Total Blog Post: {blogPosts.length}</li>
-                        </div>
-                        <li><Link to='/wishLists' className="font-bold">My WishList</Link></li>
-                        <li><Link to='/createBlog' className="font-bold">Create a Blog Post</Link></li>
+                        </ul>
+                        <ul className="flex md:flex-col flex-wrap gap-4">
+                            <li><Link to='/wishLists' className="font-bold border px-1 border-orange-600">My WishList</Link></li>
+                            <li><Link to='/createBlog' className="font-bold border px-1 border-orange-600">Create a Blog Post</Link></li>
 
-                        <li><Link to='/' ><span className="text-orange-600 font-bold">{'<Back to Home'}</span></Link></li>
-                    </ul>
-                    <div className="lg:p-4 lg:mt-2 lg:flex hidden w-full pl-4">
-                        <NewsLetter></NewsLetter>
+                            <li><Link to='/' ><span className="font-bold border px-1 border-orange-600">{'<Back to Home'}</span></Link></li>
+                        </ul>
                     </div>
                     <div className="md:flex mt-4 hidden pl-4">
                         <Social></Social>
                     </div>
+                    <div className="lg:p-4 lg:mt-2 lg:flex hidden w-6/8 pl-4">
+                        <NewsLetter></NewsLetter>
+                    </div>
+
                 </div>
                 <div className=" lg:w-4/6 mx-auto md:w-5/6">
                     <h2 className="text-2xl font-bold text-center">My Posts</h2>
@@ -111,12 +113,13 @@ const Profile = () => {
                             </div>
                         </div>)
                     }
+                    <div className="md:hidden flex">
+                        <Social></Social>
+                    </div>
                     <div className="md:flex lg:hidden justify-center mt-8">
                         <NewsLetter></NewsLetter>
                     </div>
-                    <div className="md:hidden flex justify-center">
-                        <Social></Social>
-                    </div>
+
                 </div>
             </div>
 

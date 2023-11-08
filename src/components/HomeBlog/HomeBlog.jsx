@@ -1,15 +1,18 @@
 
 import { PropTypes } from 'prop-types';
-import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
+import { AiFillHeart, AiOutlineDelete, AiOutlineHeart, AiTwotoneEdit } from 'react-icons/ai';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { AuthContext } from '../Provider/AuthProvider';
 import { useContext, useEffect, useState } from 'react';
 import { BsSend } from 'react-icons/bs';
+import Swal from 'sweetalert2';
 
 const HomeBlog = ({ blog }) => {
     const { _id, title, authorImg, category, postAdminMail, image, shortDescription, date, details } = blog;
 
+    const location = useLocation();
+    const navigate = useNavigate();
     const { user } = useContext(AuthContext);
     const currentEmail = user?.email;
     const commentAuthorImg = user?.photoURL ? user.photoURL : "https://i.ibb.co/NVLwTNM/manager.jpg";
@@ -153,6 +156,38 @@ const HomeBlog = ({ blog }) => {
             });
     }
 
+    const handleDeletePost = (_id) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Delete Post!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`http://localhost:5000/blogs/${_id}`, {
+                    method: 'DELETE'
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        if (data.deletedCount > 0) {
+                            Swal.fire(
+                                'Deleted!',
+                                'The BlogPost has been deleted.',
+                                'success'
+                            )
+
+                            navigate(location.state?.from ? location.state.from : '/');
+                        }
+                    })
+
+            }
+        })
+    }
+
 
     return (
         <div className='space-y-2  border mx-2 mt-8 rounded-lg'>
@@ -205,18 +240,29 @@ const HomeBlog = ({ blog }) => {
                         </div>
                         <div className='w-full'>
                             {
-                                user?.email === postAdminMail ?
-                                    ''
-                                    :
-                                    <form onSubmit={handleComment}>
-                                        <div className="flex items-center">
-                                            <input required type="text" name="title" placeholder="Write a comment..." className="input input-bordered rounded-3xl w-full" />
-                                            <button type="submit" className="bg-orange-600 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded-full ml-2">
-                                                <BsSend className="text-xl" />
-                                            </button>
+                                user ?
+                                    user?.email === postAdminMail ?
+                                        <div className='lg:flex gap-2 items-center'>
+                                            <p>You cannot comment on your own post</p>
+                                            <div className="flex gap-6 pr-1">
+                                                <Link to={`/updateBlog/${blog._id}`}><button className="bg-green-600 p-2 rounded"><AiTwotoneEdit className='text-white'></AiTwotoneEdit></button></Link>
+                                                <button onClick={() => handleDeletePost(_id)} className="bg-red-500 p-2 rounded"><AiOutlineDelete className='text-white'></AiOutlineDelete></button>
+                                            </div>
                                         </div>
-                                    </form>
+
+                                        :
+                                        <form onSubmit={handleComment}>
+                                            <div className="flex items-center">
+                                                <input required type="text" name="title" placeholder="Write a comment..." className="input input-bordered rounded-3xl w-full" />
+                                                <button type="submit" className="bg-orange-600 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded-full ml-2">
+                                                    <BsSend className="text-xl" />
+                                                </button>
+                                            </div>
+                                        </form>
+                                    :
+                                    'You need to login to comment'
                             }
+
                         </div>
                     </div>
                     <div className="md:flex justify-end w-44 md:mt-0 mt-2">

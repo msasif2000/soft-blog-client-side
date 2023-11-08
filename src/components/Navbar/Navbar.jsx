@@ -6,8 +6,8 @@ import { AuthContext } from "../Provider/AuthProvider";
 const Navbar = () => {
     const { user } = useContext(AuthContext);
     return (
-        <div className="flex flex-col lg:ml-2 md:mt-6 md:p-4 lg:p-2">
-            <div className="navbar-start pr-32">
+        <div className="flex flex-col lg:ml-2 md:mt-6 md:p-4 lg:p-2 md:w-full w-1/3">
+            <div className="navbar-start">
                 <div className="dropdown">
                     <label tabIndex={0} className="btn btn-ghost md:hidden">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>

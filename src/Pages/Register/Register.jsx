@@ -5,7 +5,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import Navbar from "../../components/Navbar/Navbar";
 import { AuthContext } from "../../components/Provider/AuthProvider";
-import Footer from "../../components/Footer/Footer";
 
 const Register = () => {
 
@@ -155,20 +154,8 @@ const Register = () => {
                         </div>
                     </div>
                 </div>
-                <ToastContainer
-                    position="top-center"
-                    autoClose={2000}
-                    hideProgressBar={false}
-                    newestOnTop={false}
-                    closeOnClick
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                    theme="colored"
-                />
+                <ToastContainer/>
             </div>
-            <Footer></Footer>
         </div>
     );
 };

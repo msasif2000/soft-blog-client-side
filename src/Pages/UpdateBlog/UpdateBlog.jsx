@@ -78,7 +78,7 @@ const UpdateBlog = () => {
                                     <label className="label">
                                         <span className="label-text font-bold">Title</span>
                                     </label>
-                                    <label className="input-group">
+                                    <label className="">
                                         <input required type="text" name="title" defaultValue={title} placeholder="Enter Blog Title" className="input input-bordered w-full" />
                                     </label>
                                 </div>
@@ -86,7 +86,7 @@ const UpdateBlog = () => {
                                     <label className="label">
                                         <span className="label-text font-bold">Select Category</span>
                                     </label>
-                                    <label className="input-group">
+                                    <label className="">
                                         <select name="category" className="input input-bordered w-full">
                                             <option value="Travel and Adventure" selected={category === "Travel and Adventure"}>Travel and Adventure</option>
                                             <option value="Technology and Programming" selected={category === "Technology and Programming"}>Technology and Programming</option>
@@ -103,7 +103,7 @@ const UpdateBlog = () => {
                                     <label className="label">
                                         <span className="label-text font-bold">Image Link</span>
                                     </label>
-                                    <label className="input-group">
+                                    <label className="">
                                         <input required type="text" name="image" defaultValue={image} placeholder="Enter Image Link" className="input input-bordered w-full" />
                                     </label>
                                 </div>
@@ -111,15 +111,15 @@ const UpdateBlog = () => {
                                     <label className="label">
                                         <span className="label-text font-bold">Short Description</span>
                                     </label>
-                                    <label className="input-group">
+                                    <label className="">
                                         <input required type="text" name="shortDescription" defaultValue={shortDescription} placeholder="Enter a Short Description" className="input input-bordered w-full" />
                                     </label>
                                 </div>
                                 <div className="form-control">
                                     <label className="label">
-                                        <span className="label-text font-bold">Enter Details</span>
+                                        <span className="label-text font-bold">Update Details</span>
                                     </label>
-                                    <label className="input-group">
+                                    <label className="">
                                         <input required type="text" name="details" defaultValue={details} placeholder="Write Your Blog Here..." className="input input-bordered w-full h-28" />
                                     </label>
                                 </div>
