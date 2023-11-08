@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../components/Provider/AuthProvider";
 import Header from "../../components/Header/Header";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import NewsLetter from "../../components/NewsLetter/NewsLetter";
 import { AiTwotoneEdit, AiOutlineDelete } from "react-icons/ai";
 import Swal from "sweetalert2";
@@ -24,7 +24,7 @@ const Profile = () => {
     const name = user?.displayName;
     // const photoURL = user?.photoURL? user.photoURL : "https://i.ibb.co/NVLwTNM/manager.jpg";
 
-    const location = useLocation();
+   // const location = useLocation();
     const navigate = useNavigate();
     const handleDeletePost = (_id) => {
         Swal.fire({
@@ -50,7 +50,7 @@ const Profile = () => {
                                 'success'
                             )
 
-                            navigate(location.state?.from ? location.state.from : `/profile/${email}`);
+                            navigate( '/profile');
                         }
                     })
 

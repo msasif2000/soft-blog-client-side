@@ -29,14 +29,17 @@ const Navbar = () => {
                         }
                     </ul>
                 </div>
-                
+
             </div>
 
             <ul className="md:flex flex-col hidden sty space-y-4 ">
                 <li><NavLink to='/'>Home</NavLink></li>
                 <li><NavLink to='/allBlogs'>All Blogs</NavLink></li>
                 <li><NavLink to='/featuredBlogs'>Featured Blogs</NavLink></li>
-                {
+                <li><NavLink to='/createBlog'>Create Blog</NavLink></li>
+                <li><NavLink to='/profile'>My Blogs</NavLink></li>
+                <li><NavLink to='/wishLists'>My Wishlists</NavLink></li>
+                {/* {
                     user ? (
                         <>
                             <li><NavLink to='/createBlog'>Create Blog</NavLink></li>
@@ -46,7 +49,7 @@ const Navbar = () => {
                     ) : (
                         <li><NavLink to='/login'>Create Blog</NavLink></li>
                     )
-                }
+                } */}
 
             </ul>
         </div>

@@ -15,7 +15,7 @@ const UpdateBlog = () => {
     const navigate = useNavigate();
     const { user } = useContext(AuthContext)
     //console.log(user);
-    const currentEmail = user.email;
+   // const currentEmail = user.email;
     const userImg = user?.photoURL ? user.photoURL : "https://i.ibb.co/R3PnR7z/user.png";
 
     const handleUpdateBlog = (e) => {
@@ -57,7 +57,7 @@ const UpdateBlog = () => {
 
 
                 setTimeout(() => {
-                    navigate(location.state?.from ? location.state.from : `/profile/${currentEmail}`);
+                    navigate(location.state?.from ? location.state.from :'/');
                 }, 2000);
             })
 

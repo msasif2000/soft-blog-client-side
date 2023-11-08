@@ -59,7 +59,7 @@ const FeaturedBlogs = () => {
                                 headerGroups.map((headerGroup) => (
                                     <tr {...headerGroup.getHeaderGroupProps()}  className="bg-gray-200">
                                         {headerGroup.headers.map(column => (
-                                            <th {...column.getHeaderProps()} className="p-2">
+                                            <th {...column.getHeaderProps()} className="py-2">
                                                 {column.render('Header')}
                                             </th>
                                         ))}
@@ -73,7 +73,7 @@ const FeaturedBlogs = () => {
                                 return (
                                     <tr {...row.getRowProps()}  className="hover:bg-gray-100">
                                         {row.cells.map(cell => (
-                                             <td {...cell.getCellProps()} className=" p-2">{cell.render('Cell')}</td>
+                                             <td {...cell.getCellProps()} className=" lg:pl-16">{cell.render('Cell')}</td>
                                         ))}
                                     </tr>
                                 )

@@ -4,7 +4,7 @@ import Swal from 'sweetalert2'
 
 const WishListPage = ({ blog }) => {
     // console.log(blog);
-    const { _id, title, blogId, authorImg, category, currentEmail,  postAdminMail, image, shortDescription, date } = blog;
+    const { _id, title, blogId, authorImg, category, postAdminMail, image, shortDescription, date } = blog;
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -19,25 +19,27 @@ const WishListPage = ({ blog }) => {
             confirmButtonText: 'Yes, remove it!'
         }).then((result) => {
             if (result.isConfirmed) {
-        fetch(`http://localhost:5000/wishList/${_id}`, {
-            method: 'DELETE'
-        })
-            .then(res => res.json())
-            .then(data => {
-                //console.log(data);
-                if (data.deletedCount > 0) {
-                    Swal.fire(
-                        'Deleted!',
-                        'The blog is remove from your WishList.',
-                        'success'
-                    )
+                fetch(`http://localhost:5000/wishList/${_id}`, {
+                    method: 'DELETE'
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        //console.log(data);
+                        if (data.deletedCount > 0) {
+                            Swal.fire(
+                                'Deleted!',
+                                'The blog is remove from your WishList.',
+                                'success'
+                            )
 
-                     navigate(location.state?.from ? location.state.from : `/wishLists/${currentEmail}`);
-                }
-            })
-      
-    }
-})
+
+                        }
+                    })
+                setTimeout(() => {
+                    navigate(location.state?.from ? location.state.from : '/wishLists');
+                }, 1000);
+            }
+        })
     }
     return (
         <div className='space-y-2 pt-6'>

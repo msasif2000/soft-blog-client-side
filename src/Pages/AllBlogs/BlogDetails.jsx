@@ -144,6 +144,10 @@ const BlogDetails = () => {
                         autoClose: 1500,
                     });
                     form.reset();
+
+                    const newComments = [...comments, data];
+                    setComments(newComments);
+
                 } else {
                     toast.error('Failed to comment', {
                         position: toast.POSITION.TOP_CENTER,

@@ -7,6 +7,8 @@ import { AuthContext } from '../Provider/AuthProvider';
 import { useContext, useEffect, useState } from 'react';
 import { BsSend } from 'react-icons/bs';
 import Swal from 'sweetalert2';
+import { motion } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
 
 const HomeBlog = ({ blog }) => {
     const { _id, title, authorImg, category, postAdminMail, image, shortDescription, date, details } = blog;
@@ -187,11 +189,22 @@ const HomeBlog = ({ blog }) => {
             }
         })
     }
+    const { ref, inView } = useInView({
+        triggerOnce: true, 
+    });
 
 
     return (
-        <div className='space-y-2  border mx-2 mt-8 rounded-lg'>
-            <img src={image} alt="" className='lg:h-[450px] md:h-[300px] h-[250px] w-full rounded-lg' />
+        <motion.div className='space-y-2  border mx-2 mt-8 rounded-lg' ref={ref} // Attach the ref to the component
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.5 }}>
+            <motion.img src={image} alt="" className='lg:h-[450px] md:h-[300px] h-[250px] w-full rounded-lg' key={image}
+                initial={{ x: 300, opacity: 0 }}
+                animate={inView ? { x: 0, opacity: 1 } : {}}
+                exit={{ x: -300, opacity: 0 }}
+            />
             <div className='flex  px-2 items-center gap-2'>
                 <img src={authorImg} alt="" className="h-12 w-12 rounded-full bg-sky-300 border-2" />
                 <div className='lg:flex items-center gap-2 justify-between w-full'>
@@ -276,7 +289,7 @@ const HomeBlog = ({ blog }) => {
                 </div>
             </div>
             <ToastContainer />
-        </div>
+        </motion.div>
     );
 };
 

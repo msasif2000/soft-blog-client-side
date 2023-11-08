@@ -6,6 +6,7 @@ import Social from "../../components/Social/Social";
 import Navbar from "../../components/Navbar/Navbar";
 import { useEffect, useState } from "react";
 import NewsLetter from "../../components/NewsLetter/NewsLetter";
+import { AnimatePresence } from "framer-motion";
 
 const Home = () => {
     const [blogs, setBlogs] = useState([]);
@@ -21,7 +22,7 @@ const Home = () => {
             <Header></Header>
             <div className="md:flex gap-6">
                 <div className="lg:w-2/6 md:w-2/5">
-                    <div className="flex md:flex-col flex-row-reverse">
+                    <div className="flex md:flex-col flex-row-reverse w-3/4">
                         <div>
                             <h2 className="text-2xl lg:ml-2 md:px-4"><span className="text-orange-800 font-bold px-1 shadow-2xl shadow-orange-400">Explore Yourself</span>, <br /> <span className=" text-orange-600 font-bold shadow-2xl  shadow-orange-600  px-1 py-1">Share with others</span></h2>
                         </div>
@@ -42,11 +43,12 @@ const Home = () => {
                     </div>
 
                     <h2 className="text-2xl font-bold text-center mt-12 bg-orange-600 p-2 text-white rounded">Recent Blogs</h2>
-                    <div>
-                        {
-                            blogs.map(blog => <HomeBlog key={blog._id} blog={blog}></HomeBlog>)
-                        }
-                    </div>
+                    <AnimatePresence>
+                            {
+                                blogs.map(blog => <HomeBlog key={blog._id} blog={blog}></HomeBlog>)
+                            }
+                        
+                    </AnimatePresence>
                     <div className="pt-4">
                         <Link to='/allBlogs'><button className="btn btn-sm bg-orange-600 text-white">See More Blog...</button></Link>
                     </div>

@@ -12,7 +12,7 @@ const WishLists = () => {
     const [wishLists, setWishLists] = useState([]);
     //console.log(wishLists);
     useEffect(() => {
-        fetch(`http://localhost:5000/wishLists/${userEmail}`)
+        fetch(`http://localhost:5000/wishLists/${userEmail}`, {credentials: 'include'})
             .then(res => res.json())
             .then(data => {
                 setWishLists(data);
