@@ -14,3 +14,11 @@ Soft Blog is a complete blog site where users can read, write, edit, post, and r
 - Authentication a maintained through the Firebase authentication system.
 - Every data of a user is saved to our super secret database.
 # Soft Blog Website Link: https://soft-blogs.web.app/
+
+</br>
+
+
+# These are the tools I used in the project:
+#### Frontend: JavaScript, React, HTML, CSS, Tailwind CSS
+#### Backend: Node.js, Express.js
+#### Other tools: Git, Visual Studio Code
