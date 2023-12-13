@@ -1,12 +1,16 @@
+import { FcLike } from "react-icons/fc";
+import { FcLikePlaceholder } from "react-icons/fc";
+
+import { BsFillBookmarkCheckFill } from "react-icons/bs";
+import { BiBookmarkAltPlus } from "react-icons/bi";
+import { FcComments } from "react-icons/fc";
 
 import { PropTypes } from 'prop-types';
-import { AiFillHeart, AiOutlineDelete, AiOutlineHeart, AiTwotoneEdit } from 'react-icons/ai';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { AuthContext } from '../Provider/AuthProvider';
 import { useContext, useEffect, useState } from 'react';
 import { BsSend } from 'react-icons/bs';
-import Swal from 'sweetalert2';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { PhotoProvider, PhotoView } from 'react-photo-view';
@@ -14,23 +18,107 @@ import 'react-photo-view/dist/react-photo-view.css';
 
 const HomeBlog = ({ blog }) => {
     const { _id, title, authorImg, category, postAdminMail, image, shortDescription, date, details } = blog;
-
-    const location = useLocation();
-    const navigate = useNavigate();
     const { user } = useContext(AuthContext);
     const currentEmail = user?.email;
     const commentAuthorImg = user?.photoURL ? user.photoURL : "https://i.ibb.co/NVLwTNM/manager.jpg";
 
-    const [blogPosts, setBlogPosts] = useState([]);
-    useEffect(() => {
-        fetch(`https://soft-blog-server.vercel.app/profile/${postAdminMail}`)
-        .then(res => res.json())
-        .then(data => {
-            setBlogPosts(data);
-        })
-    }, [postAdminMail])
     const [isInWishList, setIsInWishList] = useState(false);
     const [wishListId, setWishListID] = useState(null);
+    const [isInReaction, setIsInReaction] = useState(false);
+    const [reactionId, setReactionID] = useState(null);
+
+    useEffect(() => {
+        if (user) {
+            fetch(`http://localhost:5000/reactions/${currentEmail}`)
+                .then(res => res.json())
+                .then(data => {
+                    const existInReaction = data.find(
+                        exist =>
+                            exist.blogId === _id && exist.currentEmail === currentEmail
+                    );
+                    if (existInReaction) {
+                        setIsInReaction(true);
+                        setReactionID(existInReaction._id);
+                    }
+
+                })
+
+        }
+    }, [user, currentEmail, _id])
+
+    const handleReaction = (addToReaction) => {
+        if (!user) {
+            toast.error('Please log in to react on a post.', {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 1500,
+            });
+            return;
+        }
+        if (addToReaction) {
+            if (isInReaction) {
+                toast.error('Already Added to Reaction', {
+                    position: toast.POSITION.TOP_CENTER,
+                    autoClose: 1500,
+                });
+            } else {
+                const newReaction = { title, authorImg, blogId: _id, category, postAdminMail, image, shortDescription, date, currentEmail: currentEmail, details };
+
+                fetch('http://localhost:5000/addReaction', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newReaction),
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        if (data) {
+                            setIsInReaction(true);
+                            // console.log(data._id);
+                            setReactionID(data.insertedId);
+                        } else {
+                            toast.error('Failed to add to Reaction', {
+                                position: toast.POSITION.TOP_CENTER,
+                                autoClose: 1500,
+                            });
+                        }
+                    });
+            }
+        } else {
+            if (isInReaction) {
+                console.log(reactionId);
+                fetch(`http://localhost:5000/reaction/${reactionId}`, {
+                    method: 'DELETE',
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data) {
+                            setIsInReaction(false);
+                        } else {
+                            toast.error('Failed to remove from Reaction', {
+                                position: toast.POSITION.TOP_CENTER,
+                                autoClose: 1500,
+                            });
+                        }
+                    });
+            }
+        }
+    };
+    const [reactionCount, setReactionCount] = useState(0);
+    useEffect(() => {
+        fetch(`http://localhost:5000/reactions/${_id}`)
+            .then(res => res.json())
+            .then(data => {
+                setReactionCount(data.length);
+            }), [_id]
+    })
+    // const [reaction, setReaction] = useState(null);
+    // useEffect(() => {
+    //     fetch(`http://localhost:5000/reactions/${_id}`)
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             setReaction(data);
+    //         }), [_id]
+    // })
 
     const [comments, setComments] = useState(null);
     useEffect(() => {
@@ -168,39 +256,6 @@ const HomeBlog = ({ blog }) => {
             });
     }
 
-    const handleDeletePost = (_id) => {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, Delete Post!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                fetch(`https://soft-blog-server.vercel.app/blogs/${_id}`, {
-                    method: 'DELETE'
-                })
-                    .then(res => res.json())
-                    .then(data => {
-                        console.log(data);
-                        if (data.deletedCount > 0) {
-                            Swal.fire(
-                                'Deleted!',
-                                'The BlogPost has been deleted.',
-                                'success'
-                            )
-
-                            const remaining = blogPosts.filter(blog => blog._id !== _id);
-                            setBlogPosts(remaining);
-                            navigate(location.state?.from ? location.state.from : '/');
-                        }
-                    })
-
-            }
-        })
-    }
     const { ref, inView } = useInView({
         triggerOnce: true,
     });
@@ -211,14 +266,14 @@ const HomeBlog = ({ blog }) => {
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
             exit={{ opacity: 0 }}
-            transition={{ duration: 1.5 }}
+            transition={{ duration: 2 }}
         >
             <PhotoProvider>
                 <PhotoView src={image}>
                     <motion.img src={image} alt="" className='lg:h-[450px] md:h-[300px] h-[250px] w-full rounded-lg' key={image}
-                        initial={{ x: 300, opacity: 0 }}
-                        animate={inView ? { x: 0, opacity: 1 } : {}}
-                        exit={{ x: -300, opacity: 0 }}
+                        initial={{ y: 1200, opacity: 0 }}
+                        animate={inView ? { y: 0, opacity: 1 } : {}}
+                        exit={{ y: -800, opacity: 0 }}
                     />
                 </PhotoView>
             </PhotoProvider>
@@ -237,26 +292,47 @@ const HomeBlog = ({ blog }) => {
                 <p>Category: <span className='italic font-semibold'>{category}</span></p>
                 <p>###{shortDescription}###</p>
                 <div className="md:flex justify-between items-center pb-4">
-                    <div className='flex justify-between items-center'>
+                    <div className='flex justify-between items-center gap-2'>
                         {
                             user ? (
                                 isInWishList ? (
-                                    <AiFillHeart className="text-3xl" onClick={() => handleWishList(false)} />
+                                    <BsFillBookmarkCheckFill className="text-3xl" onClick={() => handleWishList(false)} />
                                 ) : (
-                                    <AiOutlineHeart className="text-3xl" onClick={() => handleWishList(true)} />
+                                    <BiBookmarkAltPlus className="text-3xl" onClick={() => handleWishList(true)} />
                                 )
                             ) : (
                                 <Link to="/login">
-                                    <AiOutlineHeart className="text-3xl"></AiOutlineHeart>
+                                    <BiBookmarkAltPlus className="text-3xl" />
                                 </Link>
                             )
                         }
+                        <div>
+                            {
+                                user ? (
+                                    isInReaction ? (
+                                        <div className="flex items-center justify-center gap-1">
+                                            <FcLike className="text-3xl" onClick={() => handleReaction(false)} />
+                                            <p className="text-xl">{reactionCount}</p>
+                                        </div>
+                                    ) : (
+                                        <div className="flex items-center justify-center gap-1">
+                                            <FcLikePlaceholder className="text-3xl" onClick={() => handleReaction(true)} />
+                                            <p className="text-xl">{reactionCount}</p>
+                                        </div>
+                                    )
+                                ) : (
+                                    <Link to="/login">
+                                        <FcLikePlaceholder className="text-3xl" />
+                                    </Link>
+                                )
+                            }
+                        </div>
                         <div className='md:hidden'>
                             {
                                 cmmnt === 0 ?
-                                    <p className="w-1/4 flex gap-1"><span>No </span> <span> Comments</span></p>
+                                    <p className="w-1/4 flex gap-1"><span><FcComments className="text-3xl" /></span></p>
                                     :
-                                    <p className="w-1/4 flex gap-1"><span>{cmmnt} </span> <span> Comments</span></p>
+                                    <p className="w-1/4 flex gap-1"><FcComments className="text-3xl" /><span>{cmmnt} </span></p>
                             }
                         </div>
                     </div>
@@ -264,9 +340,9 @@ const HomeBlog = ({ blog }) => {
                         <div className='md:flex hidden'>
                             {
                                 cmmnt === 0 ?
-                                    <p className="w-1/4 flex gap-1"><span>No </span> <span> Comments</span></p>
+                                    <p className="w-1/4 flex gap-1"> <span> <FcComments className="text-3xl" /></span></p>
                                     :
-                                    <p className="w-1/4 flex gap-1"><span>{cmmnt} </span> <span> Comments</span></p>
+                                    <p className="w-1/4 flex gap-1"><span> <FcComments className="text-3xl" /></span><span>{cmmnt} </span> </p>
                             }
                         </div>
                         <div className='w-full'>
@@ -274,11 +350,8 @@ const HomeBlog = ({ blog }) => {
                                 user ?
                                     user?.email === postAdminMail ?
                                         <div className='lg:flex gap-2 items-center'>
-                                            <p>You cannot comment on your own post</p>
-                                            <div className="flex gap-6 pr-1">
-                                                <Link to={`/updateBlog/${blog._id}`}><button className="bg-green-600 p-2 rounded"><AiTwotoneEdit className='text-white'></AiTwotoneEdit></button></Link>
-                                                <button onClick={() => handleDeletePost(_id)} className="bg-red-500 p-2 rounded"><AiOutlineDelete className='text-white'></AiOutlineDelete></button>
-                                            </div>
+                                            <p className='text-red-600'>You cannot comment on your own post</p>
+
                                         </div>
 
                                         :

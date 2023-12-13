@@ -1,34 +1,25 @@
+import { BsFillBookmarkCheckFill } from "react-icons/bs"; 
+import { BiBookmarkAltPlus } from "react-icons/bi"; 
+import { FcComments } from "react-icons/fc";
 import { PropTypes } from 'prop-types';
-import { Link,  useNavigate } from 'react-router-dom';
-import { AiFillHeart, AiOutlineDelete, AiOutlineHeart, AiTwotoneEdit } from 'react-icons/ai';
+import { Link } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../components/Provider/AuthProvider';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BsSend } from "react-icons/bs";
-import Swal from 'sweetalert2';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 
 const BlogSection = ({ blog }) => {
     const { _id, title, authorImg, category, postAdminMail, image, shortDescription, date, details } = blog;
 
-    //const location = useLocation();
-    const navigate = useNavigate();
     const { user } = useContext(AuthContext);
     const currentEmail = user?.email;
     const commentAuthorImg = user?.photoURL ? user.photoURL : "https://i.ibb.co/NVLwTNM/manager.jpg";
     const [isInWishList, setIsInWishList] = useState(false);
     const [wishListId, setWishListID] = useState(null);
 
-    const [blogPosts, setBlogPosts] = useState([]);
-    useEffect(() => {
-        fetch(`https://soft-blog-server.vercel.app/profile/${postAdminMail}`)
-        .then(res => res.json())
-        .then(data => {
-            setBlogPosts(data);
-        })
-    }, [postAdminMail])
     const [comments, setComments] = useState(null);
     useEffect(() => {
         fetch(`https://soft-blog-server.vercel.app/comments/${_id}`)
@@ -168,55 +159,22 @@ const BlogSection = ({ blog }) => {
     }
 
 
-    const handleDeletePost = (_id) => {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, Delete Post!'
-        })
-        .then((result) => {
-            if (result.isConfirmed) {
-                fetch(`https://soft-blog-server.vercel.app/blogs/${_id}`, {
-                    method: 'DELETE'
-                })
-                    .then(res => res.json())
-                    .then(data => {
-                        console.log(data);
-                        if (data.deletedCount > 0) {
-                            Swal.fire(
-                                'Deleted!',
-                                'The BlogPost has been deleted.',
-                                'success'
-                            )
 
-                            const remaining = blogPosts.filter(blog => blog._id !== _id);
-                            setBlogPosts(remaining);
-                            navigate('/');
-                        }
-                    })
-
-            }
-        })
-    }
     const { ref, inView } = useInView({
-        triggerOnce: true, 
+        triggerOnce: true,
     });
 
     return (
         <motion.div className="space-y-2 pt-6 border-b-black border-b-2 " ref={ref}
-        initial={{ opacity: 0 }}
-        animate={inView ? { opacity: 1 } : {}}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 1.5 }}>
-            <motion.img src={image} alt="" className="lg:h-[450px] md:h-[350px] h-[250px] w-full rounded-lg" 
-                initial={{ x: 300, opacity: 0 }}
-                animate={inView ? { x: 0, opacity: 1 } : {}}
-                exit={{ x: -300, opacity: 0 }}
-                 />
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.8 }}>
+            <motion.img src={image} alt="" className="lg:h-[450px] md:h-[350px] h-[250px] w-full rounded-lg"
+                initial={{ y: 1200, opacity: 0 }}
+                animate={inView ? { y: 0, opacity: 1 } : {}}
+                exit={{ y: -800, opacity: 0 }}
+            />
             <div className='flex  px-2 items-center gap-2'>
                 <img src={authorImg} alt="" className="h-12 w-12 rounded-full bg-sky-300 border-2" />
                 <div className='lg:flex items-center gap-2 justify-between w-full'>
@@ -235,22 +193,22 @@ const BlogSection = ({ blog }) => {
                         {
                             user ? (
                                 isInWishList ? (
-                                    <AiFillHeart className="text-3xl" onClick={() => handleWishList(false)} />
+                                    <BsFillBookmarkCheckFill  className="text-3xl" onClick={() => handleWishList(false)} />
                                 ) : (
-                                    <AiOutlineHeart className="text-3xl" onClick={() => handleWishList(true)} />
+                                    <BiBookmarkAltPlus className="text-3xl" onClick={() => handleWishList(true)} />
                                 )
                             ) : (
                                 <Link to="/login">
-                                    <AiOutlineHeart className="text-3xl"></AiOutlineHeart>
+                                    <BiBookmarkAltPlus className="text-3xl"/>
                                 </Link>
                             )
                         }
                         <div className='md:hidden'>
                             {
                                 cmmnt === 0 ?
-                                    <p className="w-1/4 flex gap-1"><span>No </span> <span> Comments</span></p>
+                                    <p className="w-1/4 flex gap-1"> <span> <FcComments className="text-3xl text-orange-600" /></span></p>
                                     :
-                                    <p className="w-1/4 flex gap-1"><span>{cmmnt} </span> <span> Comments</span></p>
+                                    <p className="w-1/4 flex gap-1"><span> <FcComments className="text-3xl text-orange-600" /></span><span>{cmmnt} </span></p>
                             }
                         </div>
                     </div>
@@ -258,9 +216,9 @@ const BlogSection = ({ blog }) => {
                         <div className='md:flex hidden'>
                             {
                                 cmmnt === 0 ?
-                                    <p className="w-1/4 flex gap-1"><span>No </span> <span> Comments</span></p>
+                                    <p className="w-1/4 flex gap-1"> <span> <FcComments className="text-3xl text-orange-600" /></span></p>
                                     :
-                                    <p className="w-1/4 flex gap-1"><span>{cmmnt} </span> <span> Comments</span></p>
+                                    <p className="w-1/4 flex gap-1"><span> <FcComments className="text-3xl text-orange-600" /></span><span>{cmmnt} </span></p>
                             }
                         </div>
                         <div className='w-full'>
@@ -268,11 +226,8 @@ const BlogSection = ({ blog }) => {
                                 user ?
                                     user?.email === postAdminMail ?
                                         <div className='lg:flex gap-2 items-center'>
-                                            <p>You cannot comment on your own post</p>
-                                            <div className="flex gap-6 pr-1">
-                                                <Link to={`/updateBlog/${blog._id}`}><button className="bg-green-600 p-2 rounded"><AiTwotoneEdit className='text-white'></AiTwotoneEdit></button></Link>
-                                                <button onClick={() => handleDeletePost(_id)} className="bg-red-500 p-2 rounded"><AiOutlineDelete className='text-white'></AiOutlineDelete></button>
-                                            </div>
+                                            <p className="text-red-600">You cannot comment on your own post</p>
+
                                         </div>
 
                                         :

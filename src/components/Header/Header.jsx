@@ -37,7 +37,7 @@ const Header = () => {
                             :
                             <>
                                 <div className="dropdown dropdown-end">
-                                    <GrUser className="text-2xl"></GrUser>
+                                    <Link to='/login'><GrUser className="text-2xl"></GrUser></Link>
                                 </div>
                                 <Link to='/login'><button className="btn btn-sm  bg-orange-600 text-white">Login</button></Link>
                                 <Link to='/register'><button className="btn btn-sm border border-orange-600 text-orange-600">Register</button></Link>

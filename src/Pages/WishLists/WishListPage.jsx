@@ -5,6 +5,8 @@ import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2'
 import { AuthContext } from '../../components/Provider/AuthProvider';
+import { motion } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
 
 const WishListPage = ({ blog }) => {
     // console.log(blog);
@@ -44,22 +46,30 @@ const WishListPage = ({ blog }) => {
                                 'Deleted!',
                                 'The blog is remove from your WishList.',
                                 'success'
-                            )
-                           
+                            )   
                             const remainingWishList = wishList.filter(blog => blog._id !== _id);
                             setBlog(remainingWishList);
                             navigate(location.state?.from ? location.state.from : '/profile');
 
                         }
-
-
                     })
             }
         })
     }
+    const { ref, inView } = useInView({
+        triggerOnce: true, 
+    });
     return (
-        <div className='space-y-2 pt-6'>
-            <img src={image} alt="" className='md:h-[450px] h-[300px] w-full rounded-lg' />
+        <motion.div className="space-y-2 pt-6 border-b-black border-b-2 " ref={ref}
+        initial={{ opacity: 0 }}
+        animate={inView ? { opacity: 1 } : {}}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 1.5 }}>
+            <motion.img src={image} alt="" className="lg:h-[450px] md:h-[350px] h-[250px] w-full rounded-lg" 
+                initial={{ y: 1200, opacity: 0 }}
+                animate={inView ? { y: 0, opacity: 1 } : {}}
+                exit={{ y: -800, opacity: 0 }}
+                 />
             <div className='flex  px-2 items-center gap-2'>
                 <img src={authorImg} alt="" className="h-12 w-12 rounded-full bg-sky-300 border-2" />
                 <div className='lg:flex items-center gap-2 justify-between w-full'>
@@ -82,7 +92,7 @@ const WishListPage = ({ blog }) => {
                     </div>
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 };
 

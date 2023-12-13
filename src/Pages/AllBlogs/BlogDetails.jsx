@@ -1,7 +1,9 @@
+import { BiBookmarkAltPlus } from "react-icons/bi"; 
+import { BsFillBookmarkCheckFill } from "react-icons/bs"; 
+import { FcComments } from "react-icons/fc";
 import { useLoaderData } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
 import { useContext, useEffect, useState } from "react";
-import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { BsSend } from "react-icons/bs";
 import { AuthContext } from "../../components/Provider/AuthProvider";
 import { toast } from "react-toastify";
@@ -186,18 +188,18 @@ const BlogDetails = () => {
                                 {
 
                                     isInWishList ? (
-                                        <AiFillHeart className="text-3xl" onClick={() => handleWishList(false)} />
+                                        <BsFillBookmarkCheckFill className="text-3xl" onClick={() => handleWishList(false)} />
                                     ) : (
-                                        <AiOutlineHeart className="text-3xl" onClick={() => handleWishList(true)} />
+                                        <BiBookmarkAltPlus  className="text-3xl" onClick={() => handleWishList(true)} />
                                     )
 
                                 }
                                 <div className='md:hidden'>
                                     {
                                         cmmnt === 0 ?
-                                            <p className="w-1/4 flex gap-1"><span>No </span> <span> Comments</span></p>
+                                            <p className="w-1/4 flex gap-1"><span><FcComments className="text-3xl" /></span></p>
                                             :
-                                            <p className="w-1/4 flex gap-1"><span>{cmmnt} </span> <span> Comments</span></p>
+                                            <p className="w-1/4 flex gap-1"><FcComments className="text-3xl" /><span>{cmmnt} </span></p>
                                     }
                                 </div>
                             </div>
@@ -205,16 +207,16 @@ const BlogDetails = () => {
                                 <div className='md:flex hidden'>
                                     {
                                         cmmnt === 0 ?
-                                            <p className="w-1/4 flex gap-1"><span>No </span> <span> Comments</span></p>
+                                            <p className="w-1/4 flex gap-1"><span><FcComments className="text-3xl" /></span></p>
                                             :
-                                            <p className="w-1/4 flex gap-1"><span>{cmmnt} </span> <span> Comments</span></p>
+                                            <p className="w-1/4 flex gap-1"><FcComments className="text-3xl" /><span>{cmmnt} </span></p>
                                     }
                                 </div>
                                 <div className='w-full'>
                                     {
                                         user ?
                                             user?.email === postAdminMail ?
-                                                'You cannot comment on your own post'
+                                                <p className='text-red-600'>You cannot comment on your own post</p>
                                                 :
                                                 <form onSubmit={handleComment}>
                                                     <div className="flex items-center">

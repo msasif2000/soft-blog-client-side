@@ -3,7 +3,7 @@ import { Navigate, useLocation } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { useContext } from "react";
 import { AuthContext } from "./AuthProvider";
-//import Skeleton from 'react-loading-skeleton';
+
 import './PrivateRoute.css';
 import Skeleton from "react-loading-skeleton";
 
@@ -21,7 +21,7 @@ const PrivateRoute = ({children}) => {
     if(user){
         return children
     }
-    return <Navigate state={location.pathname} to="/login"></Navigate>;
+    return <Navigate to='/login' state={{ from: location }}></Navigate>
 };
 
 PrivateRoute.propTypes = {
