@@ -27,24 +27,40 @@ const HomeBlog = ({ blog }) => {
     const [isInReaction, setIsInReaction] = useState(false);
     const [reactionId, setReactionID] = useState(null);
 
+    const [reactionCount, setReactionCount] = useState(0);
+
     useEffect(() => {
+        fetch(`https://soft-blog-server.vercel.app/reactions/${_id}`)
+            .then(res => res.json())
+            .then(data => {
+                setReactionCount(data.length);
+            }), [_id]
+    })
+    useEffect(() => {
+        const fetchReactions = async () => {
+            try {
+                const response = await fetch(`https://soft-blog-server.vercel.app/reactionsState/${currentEmail}`);
+                const data = await response.json();
+                //console.log(data);
+                const existInReaction = data.find(
+                    (exist) => exist.blogId === _id && exist.currentEmail === currentEmail
+                );
+
+                //console.log(existInReaction);
+                if (existInReaction) {
+                    //console.log('1');
+                    setIsInReaction(true);
+                    setReactionID(existInReaction._id);
+                }
+            } catch (error) {
+                console.error('Error fetching reactions:', error);
+            }
+        };
+
         if (user) {
-            fetch(`http://localhost:5000/reactions/${currentEmail}`)
-                .then(res => res.json())
-                .then(data => {
-                    const existInReaction = data.find(
-                        exist =>
-                            exist.blogId === _id && exist.currentEmail === currentEmail
-                    );
-                    if (existInReaction) {
-                        setIsInReaction(true);
-                        setReactionID(existInReaction._id);
-                    }
-
-                })
-
+            fetchReactions();
         }
-    }, [user, currentEmail, _id])
+    }, [user, currentEmail, _id]);
 
     const handleReaction = (addToReaction) => {
         if (!user) {
@@ -63,7 +79,7 @@ const HomeBlog = ({ blog }) => {
             } else {
                 const newReaction = { title, authorImg, blogId: _id, category, postAdminMail, image, shortDescription, date, currentEmail: currentEmail, details };
 
-                fetch('http://localhost:5000/addReaction', {
+                fetch('https://soft-blog-server.vercel.app/addReaction', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(newReaction),
@@ -86,7 +102,7 @@ const HomeBlog = ({ blog }) => {
         } else {
             if (isInReaction) {
                 console.log(reactionId);
-                fetch(`http://localhost:5000/reaction/${reactionId}`, {
+                fetch(`https://soft-blog-server.vercel.app/reaction/${reactionId}`, {
                     method: 'DELETE',
                 })
                     .then(res => res.json())
@@ -103,22 +119,7 @@ const HomeBlog = ({ blog }) => {
             }
         }
     };
-    const [reactionCount, setReactionCount] = useState(0);
-    useEffect(() => {
-        fetch(`http://localhost:5000/reactions/${_id}`)
-            .then(res => res.json())
-            .then(data => {
-                setReactionCount(data.length);
-            }), [_id]
-    })
-    // const [reaction, setReaction] = useState(null);
-    // useEffect(() => {
-    //     fetch(`http://localhost:5000/reactions/${_id}`)
-    //         .then(res => res.json())
-    //         .then(data => {
-    //             setReaction(data);
-    //         }), [_id]
-    // })
+
 
     const [comments, setComments] = useState(null);
     useEffect(() => {
@@ -131,6 +132,7 @@ const HomeBlog = ({ blog }) => {
     }, [_id])
 
     const cmmnt = comments?.length;
+
     useEffect(() => {
         if (user) {
             fetch(`https://soft-blog-server.vercel.app/wishLists/${currentEmail}`)
@@ -140,6 +142,7 @@ const HomeBlog = ({ blog }) => {
                         exist =>
                             exist.blogId === _id && exist.postAdminMail !== currentEmail
                     );
+                    //console.log(existInWishList);
                     if (existInWishList) {
                         setIsInWishList(true);
                         setWishListID(existInWishList._id);
@@ -196,7 +199,8 @@ const HomeBlog = ({ blog }) => {
                         }
                     });
             }
-        } else {
+        }
+        else {
             if (isInWishList) {
                 fetch(`https://soft-blog-server.vercel.app/wishList/${wishListId}`, {
                     method: 'DELETE',

@@ -1,7 +1,7 @@
-import { BiBookmarkAltPlus } from "react-icons/bi"; 
-import { BsFillBookmarkCheckFill } from "react-icons/bs"; 
-import { FcComments } from "react-icons/fc";
-import { useLoaderData } from "react-router-dom";
+import { BiBookmarkAltPlus } from "react-icons/bi";
+import { BsFillBookmarkCheckFill } from "react-icons/bs";
+import { FcComments, FcLike, FcLikePlaceholder } from "react-icons/fc";
+import { Link, useLoaderData } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
 import { useContext, useEffect, useState } from "react";
 import { BsSend } from "react-icons/bs";
@@ -17,6 +17,101 @@ const BlogDetails = () => {
     const commentAuthorImg = user?.photoURL ? user.photoURL : "https://i.ibb.co/NVLwTNM/manager.jpg";
     const [isInWishList, setIsInWishList] = useState(false);
     const [wishListId, setWishListID] = useState(null);
+    const [isInReaction, setIsInReaction] = useState(false);
+    const [reactionId, setReactionID] = useState(null);
+
+    const [reactionCount, setReactionCount] = useState(0);
+
+    useEffect(() => {
+        fetch(`https://soft-blog-server.vercel.app/reactions/${_id}`)
+            .then(res => res.json())
+            .then(data => {
+                setReactionCount(data.length);
+            }), [_id]
+    })
+    useEffect(() => {
+        const fetchReactions = async () => {
+            try {
+                const response = await fetch(`https://soft-blog-server.vercel.app/reactionsState/${currentEmail}`);
+                const data = await response.json();
+                //console.log(data);
+                const existInReaction = data.find(
+                    (exist) => exist.blogId === _id && exist.currentEmail === currentEmail
+                );
+
+                //console.log(existInReaction);
+                if (existInReaction) {
+                    //console.log('1');
+                    setIsInReaction(true);
+                    setReactionID(existInReaction._id);
+                }
+            } catch (error) {
+                console.error('Error fetching reactions:', error);
+            }
+        };
+
+        if (user) {
+            fetchReactions();
+        }
+    }, [user, currentEmail, _id]);
+
+    const handleReaction = (addToReaction) => {
+        if (!user) {
+            toast.error('Please log in to react on a post.', {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 1500,
+            });
+            return;
+        }
+        if (addToReaction) {
+            if (isInReaction) {
+                toast.error('Already Added to Reaction', {
+                    position: toast.POSITION.TOP_CENTER,
+                    autoClose: 1500,
+                });
+            } else {
+                const newReaction = { title, authorImg, blogId: _id, category, postAdminMail, image, shortDescription, date, currentEmail: currentEmail, details };
+
+                fetch('https://soft-blog-server.vercel.app/addReaction', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newReaction),
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        if (data) {
+                            setIsInReaction(true);
+                            // console.log(data._id);
+                            setReactionID(data.insertedId);
+                        } else {
+                            toast.error('Failed to add to Reaction', {
+                                position: toast.POSITION.TOP_CENTER,
+                                autoClose: 1500,
+                            });
+                        }
+                    });
+            }
+        } else {
+            if (isInReaction) {
+                console.log(reactionId);
+                fetch(`https://soft-blog-server.vercel.app/reaction/${reactionId}`, {
+                    method: 'DELETE',
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data) {
+                            setIsInReaction(false);
+                        } else {
+                            toast.error('Failed to remove from Reaction', {
+                                position: toast.POSITION.TOP_CENTER,
+                                autoClose: 1500,
+                            });
+                        }
+                    });
+            }
+        }
+    };
 
 
     const [comments, setComments] = useState(null);
@@ -184,22 +279,43 @@ const BlogDetails = () => {
                             <p>{details}</p>
                         </div>
                         <div className="md:flex justify-between items-center pb-4">
-                            <div className='flex justify-between items-center'>
+                            <div className='flex justify-between items-center gap-2'>
                                 {
 
                                     isInWishList ? (
                                         <BsFillBookmarkCheckFill className="text-3xl" onClick={() => handleWishList(false)} />
                                     ) : (
-                                        <BiBookmarkAltPlus  className="text-3xl" onClick={() => handleWishList(true)} />
+                                        <BiBookmarkAltPlus className="text-3xl" onClick={() => handleWishList(true)} />
                                     )
 
                                 }
+                                <div>
+                                    {
+                                        user ? (
+                                            isInReaction ? (
+                                                <div className="flex items-center justify-center gap-1">
+                                                    <FcLike className="text-3xl" onClick={() => handleReaction(false)} />
+                                                    <p className="text-xl">{reactionCount}</p>
+                                                </div>
+                                            ) : (
+                                                <div className="flex items-center justify-center gap-1">
+                                                    <FcLikePlaceholder className="text-3xl" onClick={() => handleReaction(true)} />
+                                                    <p className="text-xl">{reactionCount}</p>
+                                                </div>
+                                            )
+                                        ) : (
+                                            <Link to="/login">
+                                                <FcLikePlaceholder className="text-3xl" />
+                                            </Link>
+                                        )
+                                    }
+                                </div>
                                 <div className='md:hidden'>
                                     {
                                         cmmnt === 0 ?
                                             <p className="w-1/4 flex gap-1"><span><FcComments className="text-3xl" /></span></p>
                                             :
-                                            <p className="w-1/4 flex gap-1"><FcComments className="text-3xl" /><span>{cmmnt} </span></p>
+                                            <p className="w-1/4 flex gap-1"><span><FcComments className="text-3xl" /></span><span>{cmmnt} </span></p>
                                     }
                                 </div>
                             </div>
@@ -209,7 +325,7 @@ const BlogDetails = () => {
                                         cmmnt === 0 ?
                                             <p className="w-1/4 flex gap-1"><span><FcComments className="text-3xl" /></span></p>
                                             :
-                                            <p className="w-1/4 flex gap-1"><FcComments className="text-3xl" /><span>{cmmnt} </span></p>
+                                            <p className="w-1/4 flex gap-1"><span><FcComments className="text-3xl" /></span><span>{cmmnt} </span></p>
                                     }
                                 </div>
                                 <div className='w-full'>
