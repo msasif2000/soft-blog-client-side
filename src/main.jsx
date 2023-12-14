@@ -21,6 +21,7 @@ import Profile from './Pages/Profile/Profile';
 import UpdateBlog from './Pages/UpdateBlog/UpdateBlog';
 import FeaturedBlogs from './components/FeaturedBlogs/FeaturedBlogs';
 import { SkeletonTheme } from 'react-loading-skeleton';
+import UpdateProfile from './Pages/Profile/UpdateProfile';
 
 const router = createBrowserRouter([
   {
@@ -70,6 +71,10 @@ const router = createBrowserRouter([
       {
         path: '/profile',
         element: <PrivateRoute><Profile></Profile></PrivateRoute>
+      },
+      {
+        path: '/updateProfile',
+        element: <PrivateRoute><UpdateProfile></UpdateProfile></PrivateRoute>
       },
       {
         path: '/featuredBlogs',

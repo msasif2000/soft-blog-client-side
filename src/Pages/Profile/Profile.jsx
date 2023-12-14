@@ -71,10 +71,10 @@ const Profile = () => {
                             <li>Total Blog Post: {blogPosts.length}</li>
                         </ul>
                         <ul className="flex md:flex-col flex-wrap gap-4">
-                            <li><Link to='/wishLists' className="font-bold border px-1 border-orange-600">My WishList</Link></li>
-                            <li><Link to='/createBlog' className="font-bold border px-1 border-orange-600">Create a Blog Post</Link></li>
-
-                            <li><Link to='/' ><span className="font-bold border px-1 border-orange-600">{'<Back to Home'}</span></Link></li>
+                            <li><Link to='/wishLists' className="font-bold  px-2 btn btn-sm bg-orange-600 text-white lg:w-1/2">My WishList</Link></li>
+                            <li><Link to='/createBlog' className="font-bold px-2 btn btn-sm bg-orange-600 text-white  lg:w-1/2">Create Post</Link></li>
+                            <li><Link to='/' ><span className="font-bold  px-2 btn btn-sm bg-orange-600 text-white  lg:w-1/2">Home</span></Link></li>
+                            <li><Link to='/updateProfile' ><span className="font-bold  px-2 btn btn-sm bg-orange-600 text-white  lg:w-1/2">Update Profile</span></Link></li>
                         </ul>
                     </div>
                     <div className="md:flex mt-4 hidden pl-4">
