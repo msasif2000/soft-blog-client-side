@@ -12,6 +12,10 @@ import { toast } from "react-toastify";
 const BlogDetails = () => {
     const blog = useLoaderData();
     const { _id, title, category, authorImg, postAdminMail, image, shortDescription, date, details } = blog;
+    const createMarkup = () => {
+        return { __html: details };
+      };
+    
     const { user } = useContext(AuthContext);
     const currentEmail = user?.email;
     const commentAuthorImg = user?.photoURL ? user.photoURL : "https://i.ibb.co/NVLwTNM/manager.jpg";
@@ -276,7 +280,7 @@ const BlogDetails = () => {
                             <p>###{shortDescription}###</p>
                         </div>
                         <div className="border-2 border-orange-600 p-4">
-                            <p>{details}</p>
+                            <div dangerouslySetInnerHTML={createMarkup()} />
                         </div>
                         <div className="md:flex justify-between items-center pb-4">
                             <div className='flex justify-between items-center gap-2'>

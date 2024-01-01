@@ -4,6 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { AuthContext } from "../../components/Provider/AuthProvider";
 import Navbar from "../../components/Navbar/Navbar";
+import JoditEditor from "jodit-react";
 
 const UpdateBlog = () => {
 
@@ -13,7 +14,7 @@ const UpdateBlog = () => {
     const navigate = useNavigate();
     const { user } = useContext(AuthContext);
     const userImg = user?.photoURL ? user.photoURL : "https://i.ibb.co/R3PnR7z/user.png";
-    
+    const [content, setContent] = useState(details);
     const handleUpdateBlog = async (e) => {
         e.preventDefault();
         const form = e.target;
@@ -38,7 +39,7 @@ const UpdateBlog = () => {
             image,
             authorImg: userImg,
             shortDescription,
-            details: details,
+            details: content,
             currentDate,
             date: formattedDate
         };
@@ -126,9 +127,11 @@ const UpdateBlog = () => {
                                     <label className="label">
                                         <span className="label-text font-bold">Update Details</span>
                                     </label>
-                                    <label className="">
-                                        <textarea required name="details" defaultValue={details} placeholder="Enter Blog Details" className="textarea h-24 textarea-bordered w-full"></textarea>
-                                    </label>
+                                    <JoditEditor
+                                        value={content}
+                                        tabIndex={1}
+                                        onChange={(newContent) => setContent(newContent)} // Update the content when it changes
+                                    />
                                 </div>
 
                             </div>

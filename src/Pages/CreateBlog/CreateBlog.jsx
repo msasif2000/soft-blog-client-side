@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from "../../components/Navbar/Navbar";
-import { useContext,  useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../../components/Provider/AuthProvider";
 import JoditEditor from 'jodit-react';
 
@@ -17,6 +17,7 @@ const CreateBlog = () => {
     //     },
     //     [' ']
     // );
+
     const location = useLocation();
     const navigate = useNavigate();
     const { user } = useContext(AuthContext);
@@ -30,8 +31,7 @@ const CreateBlog = () => {
         const category = form.category.value;
         const image = form.image.value;
         const shortDescription = form.shortDescription.value;
-        const details = form.details.value;
-
+        const details = content;
         const currentDate = new Date();
         const formattedDate = currentDate.toLocaleString('en-US', {
             year: 'numeric',
@@ -128,7 +128,6 @@ const CreateBlog = () => {
                                         <JoditEditor
                                             ref={editor}
                                             value={content}
-                                            // config={config}
                                             tabIndex={1} // tabIndex of textarea
                                             onBlur={newContent => setContent(newContent)} // preferred to use only this option to update the content for performance reasons
                                             onChange={newContent => setContent(newContent)}
