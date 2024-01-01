@@ -9,7 +9,7 @@ import JoditEditor from "jodit-react";
 const UpdateBlog = () => {
 
     const blog = useLoaderData();
-    const { title, image, category, shortDescription, details, _id } = blog;
+    const { title, image, category, shortDescription, details, _id , currentDate, date} = blog;
     const location = useLocation();
     const navigate = useNavigate();
     const { user } = useContext(AuthContext);
@@ -23,15 +23,15 @@ const UpdateBlog = () => {
         const image = form.image.value;
         const shortDescription = form.shortDescription.value;
 
-        const currentDate = new Date();
-        const formattedDate = currentDate.toLocaleString('en-US', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-            hour: 'numeric',
-            minute: 'numeric',
-            second: 'numeric',
-        });
+        // const currentDate = new Date();
+        // const formattedDate = currentDate.toLocaleString('en-US', {
+        //     year: 'numeric',
+        //     month: '2-digit',
+        //     day: '2-digit',
+        //     hour: 'numeric',
+        //     minute: 'numeric',
+        //     second: 'numeric',
+        // });
 
         const updateBlog = {
             title,
@@ -41,7 +41,7 @@ const UpdateBlog = () => {
             shortDescription,
             details: content,
             currentDate,
-            date: formattedDate
+            date
         };
 
         try {
